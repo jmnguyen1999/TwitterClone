@@ -22,6 +22,7 @@ import okhttp3.Headers;
 public class TimelineActivity extends AppCompatActivity {
     private static final String TAG = "TimelineActivity";
 
+    EndlessRecyclerViewScrollListener scrollListener;
     TwitterClient client;
     RecyclerView rvTweets;
     List<Tweet> tweets;
@@ -32,6 +33,7 @@ public class TimelineActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timeline);
+
 
         swipeContainer = findViewById(R.id.swipeContainer);
         swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
@@ -51,11 +53,47 @@ public class TimelineActivity extends AppCompatActivity {
         //Set up RecyclerView with List of Tweet objects and TweetAdapter
         rvTweets = findViewById(R.id.rvTweets);
         adapter = new TweetsAdapter(this, tweets);
-        rvTweets.setLayoutManager(new LinearLayoutManager(this));
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        rvTweets.setLayoutManager(layoutManager);
         rvTweets.setAdapter(adapter);
 
+        scrollListener = new
+                EndlessRecyclerViewScrollListener(layoutManager) {
+                    @Override
+                    public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
+                        Log.i(TAG, "onLoadMore(): " + page);
+                        loadMoreData();
+                    }
+                };
+
+        rvTweets.addOnScrollListener(scrollListener);
 
         populateHomeTimeLine();
+    }
+
+    private void loadMoreData() {
+        client.getNextPageOfTweets(new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Headers headers, JSON json) {
+                Log.d(TAG, "loadMoreData(): onSuccess(): json response=" + json.toString());
+                JSONArray jsonArray = json.jsonArray;
+                try {
+                    List<Tweet> tweets = Tweet.fromJsonArray(jsonArray);
+
+                    //append new data objects and notify adapter:
+                    adapter.addAll(tweets);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
+                Log.e(TAG, "loadMoreData(): onFailure()", throwable);
+            }
+        }, tweets.get(tweets.size()-1).id);
     }
 
     private void populateHomeTimeLine() {
@@ -71,6 +109,7 @@ public class TimelineActivity extends AppCompatActivity {
                 } catch (JSONException e) {
                     Log.e(TAG, "populateHomeTimeLine(): onSuccess(): Json exception", e);
                 }
+
             }
 
             @Override
