@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/rvTweets_margin">
+
+    <ImageView
+        android:id="@+id/ivProfile"
+        android:layout_width="@dimen/ivProfile_WidthHeight"
+        android:layout_height="@dimen/ivProfile_WidthHeight"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <TextView
+        android:id="@+id/tvScreenName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/tvScreenName_marginStart"
+        android:layout_toEndOf="@+id/ivProfile"
+        android:text="jmnguyen" />
+
+    <TextView
+        android:id="@+id/tvBody"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvScreenName"
+        android:layout_marginStart="@dimen/tvBody_marginStart"
+        android:layout_marginTop="@dimen/tvBody_marginTop"
+        android:layout_toEndOf="@+id/ivProfile"
+        android:text="This is my sample tweet!" />
+</RelativeLayout>
