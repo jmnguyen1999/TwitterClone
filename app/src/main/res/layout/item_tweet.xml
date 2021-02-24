@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -18,7 +19,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/tvScreenName_marginStart"
         android:layout_toEndOf="@+id/ivProfile"
-        android:text="jmnguyen" />
+        android:text="@string/sample_username" />
 
     <TextView
         android:id="@+id/tvBody"
@@ -28,5 +29,5 @@
         android:layout_marginStart="@dimen/tvBody_marginStart"
         android:layout_marginTop="@dimen/tvBody_marginTop"
         android:layout_toEndOf="@+id/ivProfile"
-        android:text="This is my sample tweet!" />
+        android:text="@string/sample_tweet" />
 </RelativeLayout>
