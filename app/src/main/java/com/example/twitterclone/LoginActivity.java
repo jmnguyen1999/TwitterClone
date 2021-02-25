@@ -11,7 +11,7 @@ import com.example.twitterclone.R;
 import com.example.twitterclone.models.SampleModel;
 import com.example.twitterclone.models.SampleModelDao;
 import com.codepath.oauth.OAuthLoginActionBarActivity;
-
+//
 public class LoginActivity extends OAuthLoginActionBarActivity<TwitterClient> {
 
 	SampleModelDao sampleModelDao;
