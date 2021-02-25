@@ -5,28 +5,32 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="@dimen/rvTweets_margin">
+    android:layout_margin="@dimen/rvTweets_margin"
+    android:layout_marginStart="@dimen/end_margins"
+    android:layout_marginEnd="@dimen/end_margins"
+    android:layout_marginTop="@dimen/rvTweets_margin">
 
     <ImageView
         android:id="@+id/ivProfile"
         android:layout_width="@dimen/ivProfile_WidthHeight"
         android:layout_height="@dimen/ivProfile_WidthHeight"
-        tools:srcCompat="@tools:sample/avatars" />
+        tools:srcCompat="@tools:sample/avatars"
+        />
 
     <TextView
-        android:id="@+id/tvScreenName"
-        android:layout_width="@dimen/tvScreenName_layout_width"
+        android:id="@+id/tvName"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/tvScreenName_marginStart"
+        android:layout_marginStart="@dimen/tvName_marginStart"
         android:layout_toEndOf="@+id/ivProfile"
-        android:text="@string/sample_username"
+        android:text="@string/sample_name"
         android:textSize="@dimen/small_textSize" />
 
     <TextView
         android:id="@+id/tvBody"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tvScreenName"
+        android:layout_below="@+id/tvName"
         android:layout_marginStart="@dimen/tvBody_marginStart"
         android:layout_marginTop="@dimen/tvBody_marginTop"
         android:layout_toEndOf="@+id/ivProfile"
@@ -34,13 +38,28 @@
         android:textSize="@dimen/regular_textSize" />
 
     <TextView
+        android:id="@+id/tvScreenName"
+        android:layout_width="@dimen/tvScreenName_layout_width"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/tvBody"
+        android:layout_marginStart="@dimen/tvScreenName_marginStart"
+        android:layout_toEndOf="@+id/tvName"
+        android:text="@string/sample_username"
+        android:textColor="@color/tvScreenName_textColor"
+        android:textSize="@dimen/username_textSize" />
+
+    <TextView
         android:id="@+id/tvTimestamp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/tvScreenName"
+        android:layout_alignBottom="@+id/tvName"
         android:layout_alignParentEnd="true"
         android:layout_marginStart="@dimen/tvTimestamp_marginStart"
+        android:layout_marginEnd="@dimen/end_margins"
         android:layout_toEndOf="@+id/tvScreenName"
+        android:gravity="end"
         android:text="@string/sample_timestamp"
         android:textSize="@dimen/small_textSize" />
+
+
 </RelativeLayout>

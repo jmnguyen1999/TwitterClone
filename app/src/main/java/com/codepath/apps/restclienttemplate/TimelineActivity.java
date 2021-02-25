@@ -70,6 +70,11 @@ public class TimelineActivity extends AppCompatActivity {
 
         populateHomeTimeLine();
     }
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        client.clearAccessToken();
+    }
 
     private void loadMoreData() {
         client.getNextPageOfTweets(new JsonHttpResponseHandler() {

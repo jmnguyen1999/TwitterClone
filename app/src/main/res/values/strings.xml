@@ -6,7 +6,8 @@
     <string name="intent_scheme">oauth</string>
     <string name="intent_host">cprest</string>
 
-    <string name="sample_username">jmnguyen</string>
+    <string name="sample_name">Josephine Nguyen</string>
+    <string name="sample_username">(jmnguyen)</string>
     <string name="sample_tweet">This is a Tweet! Hi!!!! :)</string>
     <string name="sample_timestamp">9hr</string>
 

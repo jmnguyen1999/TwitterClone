@@ -4,15 +4,21 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
 
+    <dimen name="end_margins">13dp</dimen>
     <dimen name="rvTweets_margin">5dp</dimen>
+
     <dimen name="ivProfile_WidthHeight">50dp</dimen>
-    <dimen name="tvScreenName_marginStart">10dp</dimen>
-    <dimen name="tvScreenName_layout_width">177dp</dimen>
+
     <dimen name="small_textSize">12sp</dimen>
+    <dimen name="tvName_marginStart">5dp</dimen>
 
     <dimen name="regular_textSize">14sp</dimen>
-    <dimen name="tvBody_marginStart">10dp</dimen>
     <dimen name="tvBody_marginTop">2dp</dimen>
+    <dimen name="tvBody_marginStart">5dp</dimen>
 
-    <dimen name="tvTimestamp_marginStart">139dp</dimen>
+    <dimen name="tvTimestamp_marginStart">8dp</dimen>
+
+    <dimen name="username_textSize">11sp</dimen>
+    <dimen name="tvScreenName_layout_width">100dp</dimen>
+    <dimen name="tvScreenName_marginStart">8dp</dimen>
 </resources>
