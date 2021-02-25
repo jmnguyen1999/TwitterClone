@@ -7,6 +7,11 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.Toast;
 
 import com.example.twitterclone.R;
 import com.example.twitterclone.models.Tweet;
@@ -21,14 +26,16 @@ import java.util.List;
 import okhttp3.Headers;
 
 public class TimelineActivity extends AppCompatActivity {
-    private static final String TAG = "TimelineActivity";
+    private static final String TAG = "TimelineActivity";       //for Log()
 
-    EndlessRecyclerViewScrollListener scrollListener;
+    //fields:
     TwitterClient client;
+    Button signOffBttn;
     RecyclerView rvTweets;
     List<Tweet> tweets;
     TweetsAdapter adapter;
     SwipeRefreshLayout swipeContainer;
+    EndlessRecyclerViewScrollListener scrollListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,14 +76,35 @@ public class TimelineActivity extends AppCompatActivity {
 
         rvTweets.addOnScrollListener(scrollListener);
 
+        /*signOffBttn = findViewById(R.id.signOffBttn);
+        signOffBttn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                client.clearAccessToken();
+                finish();
+            }
+        });*/
         populateHomeTimeLine();
     }
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        client.clearAccessToken();
+
+    //Inflates the signoff button on menu
+    public boolean onCreateOptionsMenu(Menu menu){
+        getMenuInflater().inflate(R.menu.menu_timeline, menu);
+        return true;
     }
 
+    public boolean onOptionsItemSelected(MenuItem item){
+        if(item.getItemId() == R.id.signOffBttn){
+            client.clearAccessToken();
+            finish();
+            return true;
+        }
+        else{
+            Log.d(TAG, "onOptionsItemSelected(): itemId = " + item.getItemId());
+            Toast.makeText(getApplicationContext(), "Sorry! Something went wrong with the Sign Off button!", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+    }
     private void loadMoreData() {
         client.getNextPageOfTweets(new JsonHttpResponseHandler() {
             @Override

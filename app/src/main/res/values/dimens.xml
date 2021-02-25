@@ -21,4 +21,6 @@
     <dimen name="username_textSize">11sp</dimen>
     <dimen name="tvScreenName_layout_width">100dp</dimen>
     <dimen name="tvScreenName_marginStart">8dp</dimen>
+
+    <dimen name="signOffBttn_height">40dp</dimen>
 </resources>
