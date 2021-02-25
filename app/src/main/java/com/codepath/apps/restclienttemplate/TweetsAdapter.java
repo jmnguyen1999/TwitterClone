@@ -67,6 +67,7 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
         ImageView ivProfile;
         TextView tvScreenName;
         TextView tvBody;
+        TextView tvTimestamp;
 
         //itemView == one row
         public ViewHolder(@NonNull View itemView) {
@@ -74,12 +75,13 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
             ivProfile = itemView.findViewById(R.id.ivProfile);
             tvBody = itemView.findViewById(R.id.tvBody);
             tvScreenName = itemView.findViewById(R.id.tvScreenName);
-
+            tvTimestamp = itemView.findViewById(R.id.tvTimestamp);
         }
 
         public void bind(Tweet tweet){
             tvBody.setText(tweet.body);
             tvScreenName.setText(tweet.user.screenName);
+            tvTimestamp.setText(tweet.getFormattedTimestamp(tweet.createdAt));
             Glide.with(context).load(tweet.user.profileImageUrl).into(ivProfile);
         }
     }

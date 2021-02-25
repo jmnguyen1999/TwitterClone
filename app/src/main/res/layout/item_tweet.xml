@@ -15,11 +15,12 @@
 
     <TextView
         android:id="@+id/tvScreenName"
-        android:layout_width="wrap_content"
+        android:layout_width="@dimen/tvScreenName_layout_width"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/tvScreenName_marginStart"
         android:layout_toEndOf="@+id/ivProfile"
-        android:text="@string/sample_username" />
+        android:text="@string/sample_username"
+        android:textSize="@dimen/small_textSize" />
 
     <TextView
         android:id="@+id/tvBody"
@@ -29,5 +30,17 @@
         android:layout_marginStart="@dimen/tvBody_marginStart"
         android:layout_marginTop="@dimen/tvBody_marginTop"
         android:layout_toEndOf="@+id/ivProfile"
-        android:text="@string/sample_tweet" />
+        android:text="@string/sample_tweet"
+        android:textSize="@dimen/regular_textSize" />
+
+    <TextView
+        android:id="@+id/tvTimestamp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/tvScreenName"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="@dimen/tvTimestamp_marginStart"
+        android:layout_toEndOf="@+id/tvScreenName"
+        android:text="@string/sample_timestamp"
+        android:textSize="@dimen/small_textSize" />
 </RelativeLayout>

@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Simple Twitter</string>
+    <string name="app_name">Twitter Clone</string>
     <string name="login_label">Log in</string>
     <string name="intent_scheme">oauth</string>
     <string name="intent_host">cprest</string>
 
     <string name="sample_username">jmnguyen</string>
     <string name="sample_tweet">This is a Tweet! Hi!!!! :)</string>
+    <string name="sample_timestamp">9hr</string>
 
 </resources>
