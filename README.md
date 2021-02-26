@@ -26,8 +26,7 @@ The following **optional** features are implemented:
 - [ ] On the Twitter timeline, leverage the CoordinatorLayout to apply scrolling behavior that hides / shows the toolbar.
 
 The following **additional** features are implemented:
-
-- [ ] List anything else that you can get done to improve the app functionality!
+- [x] Added a sign off button in the Menu Bar
 
 ## Video Walkthrough
 
@@ -39,7 +38,10 @@ GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
 ## Notes
 
-Describe any challenges encountered while building the app.
+This week's assignment was a bit more difficult to understand that the other three weeks. I find this because we were instructed to use the RestClientTemplate provided by CodePath, and though this makes it easier for us to implement OAuth authorization, I found it a bit harder to decipher and actually understand how my app worked. Typically I follow the YouTube guide as a means to get the basic user stories done. However, once I want to personalize my app and implement other user stories, this lack of understanding makes more difficult to comprehend how other features are to be implemented, slowing down my progress. 
+
+
+Overall though, it wasn't extremely difficult to get done. This assignment simply had other adversities that prior assignments did not have. 
 
 ## Open-source libraries used
 
