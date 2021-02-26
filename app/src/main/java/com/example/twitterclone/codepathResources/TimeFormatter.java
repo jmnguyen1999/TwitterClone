@@ -1,5 +1,4 @@
-package com.example.twitterclone;
-
+package com.example.twitterclone.codepathResources;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -8,10 +7,12 @@ import java.util.Locale;
 import java.util.TimeZone;
 
 /**
- * Given a date String of the format given by the Twitter API, returns a display-formatted
- * String representing the relative time difference, e.g. "2m", "6d", "23 May", "1 Jan 14"
- * depending on how great the time difference between now and the given date is.
- * This, as of 2016-06-29, matches the behavior of the official Twitter app.
+ * TimeFormatter.java
+ * Purpose:         This is an exact copy of the CodePath file "TimeFormatter.java". This is used to use getTimeDifference() to convert a Tweet object's timestamp ("createdAt" field) into a more readable timestamp e.g 9hr
+ *
+ * Classes used:    None
+ *
+ * @author CodePath
  */
 public class TimeFormatter {
 

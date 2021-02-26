@@ -1,15 +1,21 @@
-package com.example.twitterclone;
-
+package com.example.twitterclone.codepathResources;
 import android.os.Bundle;
-
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
+/**
+ * EndlessRecyclerViewScrollListener.java
+ * Purpose:         This is an exact copy of the CodePath file "EndlessRecyclerViewScrollListener.java". This is used to implement endless scrolling on the TwitterClone home timeline. The class finds the last visible tweet and calls abstract method: "onLoadMore()"
+ *                  onLoadMore() is implemented in TimelineActivity{} where endless scrolling is needed.
+ *
+ * Classes used:    None
+ *
+ * @author CodePath
+ */
 public abstract class EndlessRecyclerViewScrollListener extends RecyclerView.OnScrollListener {
-    // The minimum amount of items to have below your current scroll position
-    // before loading more.
+    // The minimum amount of items to have below your current scroll position before loading more.
     private int visibleThreshold = 5;
     // The current offset index of data you have loaded
     private int currentPage = 0;
