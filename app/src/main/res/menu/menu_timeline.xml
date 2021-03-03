@@ -5,6 +5,11 @@
     tools:context="com.example.twitterclone.TimelineActivity">
 
     <item
+        android:id="@+id/composeBttn"
+        android:icon="@android:drawable/ic_menu_edit"
+        android:title=""
+        app:showAsAction="always" />
+    <item
         android:id="@+id/signOffBttn"
         android:title="@string/signOffBttn_text"
         app:showAsAction="never"/>

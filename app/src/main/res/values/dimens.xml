@@ -23,4 +23,8 @@
     <dimen name="tvScreenName_marginStart">8dp</dimen>
 
     <dimen name="signOffBttn_height">40dp</dimen>
+
+    <dimen name="composeActivity_etCompose_margins">7dp</dimen>
+    <dimen name="composeActivity_btnSubmit_marginTop">7dp</dimen>
+    <dimen name="composeActivity_btnSubmit_marginEnd">20dp</dimen>
 </resources>

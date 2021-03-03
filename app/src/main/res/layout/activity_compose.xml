@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.ComposeActivity">
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:counterEnabled="true"
+        app:counterMaxLength="140"
+        app:counterTextAppearance="@style/counterText"
+        app:counterOverflowTextAppearance="@style/counterOverride">
+
+        <EditText
+            android:id="@+id/etCompose"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/composeActivity_etCompose_margins"
+            android:layout_marginTop="@dimen/composeActivity_etCompose_margins"
+            android:layout_marginEnd="@dimen/composeActivity_etCompose_margins"
+            android:layout_marginBottom="@dimen/composeActivity_etCompose_margins"
+            android:ems="10"
+            android:gravity="start|top"
+            android:hint="@string/composeActivity_etCompose_hint"
+            android:inputType="textMultiLine"
+            android:minLines="6" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Button
+        android:id="@+id/btnSubmit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textInputLayout"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="@dimen/composeActivity_btnSubmit_marginTop"
+        android:layout_marginEnd="@dimen/composeActivity_btnSubmit_marginEnd"
+        android:text="@string/composeActivity_btnSubmit_text"/>
+</RelativeLayout>

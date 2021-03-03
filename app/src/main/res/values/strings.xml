@@ -11,5 +11,8 @@
     <string name="sample_tweet">This is a Tweet! Hi!!!! :)</string>
     <string name="sample_timestamp">9hr</string>
 
-    <string name="signOffBttn_text">Sign off and Close</string>
+    <string name="signOffBttn_text">Sign off</string>
+
+    <string name="composeActivity_etCompose_hint">What\'s happening?</string>
+    <string name="composeActivity_btnSubmit_text">Done</string>
 </resources>

@@ -4,6 +4,7 @@ import androidx.room.Entity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.parceler.Parcel;
 
 /**
  * User.java
@@ -15,6 +16,7 @@ import org.json.JSONObject;
  * @version 1.0
  */
 @Entity
+@Parcel
 public class User {
     @ColumnInfo
     String name;

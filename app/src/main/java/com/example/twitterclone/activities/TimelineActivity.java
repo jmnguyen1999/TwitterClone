@@ -1,9 +1,11 @@
 package com.example.twitterclone.activities;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -20,6 +22,7 @@ import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.parceler.Parcels;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,6 +42,8 @@ import okhttp3.Headers;
  */
 public class TimelineActivity extends AppCompatActivity {
     private static final String TAG = "TimelineActivity";       //for Log()
+    private static final int REQUEST_CODE = 20;
+    private static final String TWEET_KEY = "tweet";
 
     //fields:
     TwitterClient client;       //to make network requests via the Twitter API
@@ -94,8 +99,10 @@ public class TimelineActivity extends AppCompatActivity {
         populateHomeTimeLine();
     }
 
+    @Override
     /**
      * Purpose:         Inflates the menu and adds the necessary items to it (signOff button). Functions of each item is implemented in onOptionsItemSelected(). This method is called automatically by the system
+     * @return true in order for menu to display
      */
     public boolean onCreateOptionsMenu(Menu menu){
         getMenuInflater().inflate(R.menu.menu_timeline, menu);
@@ -103,21 +110,45 @@ public class TimelineActivity extends AppCompatActivity {
     }
 
     /**
-     * Purpose:         Handlers for each item in the menu. The only item present is the sign off button --> clears the authentication of the user and closes this activity
+     * Purpose:         Handlers for each item in the menu: composeBttn and signOffBttn. ComposeBttn:   navigates to ComposeActivity to create/POST a new Tweet, signOffBttn:      signs of the user and closes the activity
      * @param item, MenuItem object corresponding to an item on the menu
-     * @return whether the method executed sucessfully
+     * @return true to execute handler
      */
     public boolean onOptionsItemSelected(MenuItem item){
-        if(item.getItemId() == R.id.signOffBttn){
-            client.clearAccessToken();
-            finish();
-            return true;
+        switch(item.getItemId()){
+            case R.id.composeBttn:
+                Intent intent = new Intent(this, ComposeActivity.class);
+                startActivityForResult(intent, REQUEST_CODE);
+                return true;
+            case R.id.signOffBttn:
+                client.clearAccessToken();
+                finish();
+                return true;
+            default:        //item was not one of the items above
+                Log.d(TAG, "onOptionsItemSelected(): itemId = " + item.getItemId());
+                Toast.makeText(getApplicationContext(), "Sorry! Something went wrong!", Toast.LENGTH_SHORT).show();
+                return false;
         }
-        else{       //Display pop up message and Log the incident
-            Log.d(TAG, "onOptionsItemSelected(): itemId = " + item.getItemId());
-            Toast.makeText(getApplicationContext(), "Sorry! Something went wrong with the Sign Off button!", Toast.LENGTH_SHORT).show();
-            return false;
+    }
+
+    @Override
+    /**
+     * Purpose:     Handles the request from launching the ComposeActivity in onOptionsItemSelected(). Handles by:  obtaining the new Tweet to be updated, updating the model and RV adapter
+     *
+     * @param requestCode is the code used to identify which specific request is responding back
+     * @param resultCode is the code determining what happened during the request e.g. successful would return a RESULT_OK
+     * @param data is the Intent which carries the resulting data of the request
+     */
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if(requestCode == REQUEST_CODE && resultCode == RESULT_OK ){
+            Tweet newTweet = Parcels.unwrap(data.getParcelableExtra(TWEET_KEY));
+
+            //Insert Tweet:  Update List<Tweet>, insert in first spot b/c most recent tweet:
+            tweets.add(0, newTweet);
+            tweetsAdapter.notifyItemInserted(0);
+            rvTweets.smoothScrollToPosition(0);             //scroll up to see the new tweet
         }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     /**

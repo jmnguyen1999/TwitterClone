@@ -23,7 +23,8 @@ import com.github.scribejava.core.builder.api.BaseApi;
 public class TwitterClient extends OAuthBaseClient {
 	public static final BaseApi REST_API_INSTANCE = TwitterApi.instance();
 	public static final String REST_URL = "https://api.twitter.com/1.1";			//the base URL
-	public static final String END_POINT = "statuses/home_timeline.json";
+	public static final String TIMELINE_END_POINT = "statuses/home_timeline.json";
+	public static final String POST_END_POINT = "statuses/update.json";
 	public static final String REST_CONSUMER_KEY = BuildConfig.CONSUMER_KEY;
 	public static final String REST_CONSUMER_SECRET = BuildConfig.CONSUMER_SECRET;
 
@@ -50,7 +51,7 @@ public class TwitterClient extends OAuthBaseClient {
 	 * @param handler determines response to the request
 	 */
 	public void getHomeTimeline(JsonHttpResponseHandler handler) {
-		String apiUrl = getApiUrl(END_POINT);
+		String apiUrl = getApiUrl(TIMELINE_END_POINT);
 		client.get(apiUrl, handler);
 	}
 
@@ -66,4 +67,10 @@ public class TwitterClient extends OAuthBaseClient {
 		client.get(apiUrl, params, handler);
 	}
 
+	public void publishTweet(String tweetContent, JsonHttpResponseHandler handler) {
+		String apiUrl = getApiUrl(POST_END_POINT);
+		RequestParams params = new RequestParams();
+		params.put("status", tweetContent);
+		client.post(apiUrl, params, "", handler);
+	}
 }

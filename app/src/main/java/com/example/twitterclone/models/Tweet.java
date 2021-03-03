@@ -9,6 +9,7 @@ import com.example.twitterclone.codepathResources.TimeFormatter;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.parceler.Parcel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +24,7 @@ import java.util.List;
  * @version 2.0
  */
 @Entity
+@Parcel
 public class Tweet {
     //Define database columns and associated fields:
     @PrimaryKey
@@ -35,7 +37,7 @@ public class Tweet {
     @Embedded               //To include User in the same table but still understand the two separate classes
     User user;
 
-    public Tweet(){}
+    public Tweet(){}    //needed by Parceler library
 
     /**
      * Purpose:         Constructor, needs a JSONObject corresponding to a Tweet
