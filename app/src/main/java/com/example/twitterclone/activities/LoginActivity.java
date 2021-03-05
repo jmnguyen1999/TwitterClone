@@ -45,13 +45,6 @@ public class LoginActivity extends OAuthLoginActionBarActivity<TwitterClient> {
 		// Initialize TweetDao{}: Get the application, convert it to a TwitterApp{}, obtain database and get corresponding TweetDao instance
 		tweetDao = ((TwitterApp) getApplicationContext()).getMyDatabase().TweetDao();
 
-		//Inserts tweets into the database using the TweetDao reference "tweetDao"
-		AsyncTask.execute(new Runnable() {
-			@Override
-			public void run() {
-				tweetDao.insertTweet(tweet);
-			}
-		});
 	}
 
 	/**

@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="tvScreenName_textColor">#B6B0B7</color>
+
+    <color name="appBar_color">#1DA1F2</color>
+    <color name="valid_charLength_color">#aa5353cc</color>
+    <color name="invalid_charLength_color">#ff0000</color>
 </resources>

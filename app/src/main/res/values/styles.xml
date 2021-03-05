@@ -9,15 +9,16 @@
     </style>
 
     <!-- Application theme. -->
-    <style name="AppTheme" parent="AppBaseTheme">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+        <item name="colorPrimary">@color/appBar_color</item>
     </style>
 
-    <style name="counterText">
-        <item name="android:textColor">#aa5353cc</item>
+    <style name="validCount">
+        <item name="android:textColor">@color/valid_charLength_color</item>
     </style>
 
-    <style name="counterOverride">
-        <item name="android:textColor">#ff0000</item>
+    <style name="invalidCount">
+        <item name="android:textColor">@color/invalid_charLength_color</item>
     </style>
 </resources>

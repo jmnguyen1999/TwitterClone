@@ -8,9 +8,9 @@ import java.util.List;
 
 /**
  * TweetDao.java
- * Purpose:         This is a Data Access Object (DAO) interface, which declares queries to return tweets based on certain filters and conditions. Queries implemented: Get one tweet via its id, Get list of tweets given timestamp ("createdAt")
+ * Purpose:         This is a Data Access Object (DAO) interface, which declares queries to return tweets based on certain filters and conditions. This is how we interact with our database "MyDatabase.java".
  *
- * Classes used:        Tweet{}
+ * Classes used:        Tweet{}, User{}
  *
  *  * @author Josephine Mai Nguyen
  *  * @version 1.0
@@ -18,15 +18,17 @@ import java.util.List;
 @Dao
 public interface TweetDao {
 
-    //Get all tweets where Tweet.id = given id, name the method "byId()"
-    @Query("SELECT * FROM Tweet WHERE id = :id")
-    Tweet byId(long id);
+    //Obtain 300 corresponding Tweets and their Users (TweetWithUser objects) along with all respective fields e.g. tweet body, timestamp, etc
+    //Order all TweetWithUsers by their timestamp ("createdAt") in descending order
+    @Query("SELECT Tweet.body AS tweet_body, Tweet.createdAt AS tweet_createdAt, Tweet.id AS tweet_id, User.*" +
+            " FROM Tweet INNER JOIN User ON Tweet.userID = user.id ORDER BY createdAt DESC LIMIT 5")
+    List<TweetWithUser> recentItems();
 
-    //Get all tweets where Tweet.createdAt = given createdAt, name the method "byCreatedAt()"
-    @Query("SELECT * FROM Tweet WHERE createdAt = :createdAt")
-    List<Tweet> byCreatedAt(String createdAt);
-
-    //Replace strategy to update a table row:
+    //Insert any number of Tweets as an array into the database
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertTweet(Tweet... tweets);
+
+    //Insert any number of Users as an array into the database
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void insertUser(User... users);
 }

@@ -2,6 +2,8 @@ package com.example.twitterclone.models;
 import androidx.room.ColumnInfo;
 import androidx.room.Embedded;
 import androidx.room.Entity;
+import androidx.room.ForeignKey;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 import com.example.twitterclone.codepathResources.TimeFormatter;
@@ -23,8 +25,8 @@ import java.util.List;
  * @author Josephine Mai Nguyen
  * @version 2.0
  */
-@Entity
 @Parcel
+@Entity(foreignKeys = @ForeignKey(entity = User.class, parentColumns = "id", childColumns = "userId"))
 public class Tweet {
     //Define database columns and associated fields:
     @PrimaryKey
@@ -34,7 +36,9 @@ public class Tweet {
     String body;
     @ColumnInfo
     String createdAt;
-    @Embedded               //To include User in the same table but still understand the two separate classes
+    @ColumnInfo
+    long userId;        //To use as a foreign key
+    @Ignore
     User user;
 
     public Tweet(){}    //needed by Parceler library
@@ -45,10 +49,11 @@ public class Tweet {
      * @throws JSONException in the case cannot get fields from JSONObject
      */
     public Tweet(JSONObject object) throws JSONException {
-        this.body = object.getString("text");
-        this.createdAt = object.getString("created_at");
-        this.user = new User(object.getJSONObject("user"));
-        this.id = object.getLong("id");
+        body = object.getString("text");
+        createdAt = object.getString("created_at");
+        user = new User(object.getJSONObject("user"));
+        id = object.getLong("id");
+        userId = user.getId();
     }
 
     /**

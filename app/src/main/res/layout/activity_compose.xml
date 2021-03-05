@@ -12,8 +12,8 @@
         android:layout_height="wrap_content"
         app:counterEnabled="true"
         app:counterMaxLength="140"
-        app:counterTextAppearance="@style/counterText"
-        app:counterOverflowTextAppearance="@style/counterOverride">
+        app:counterTextAppearance="@style/validCount"
+        app:counterOverflowTextAppearance="@style/invalidCount">
 
         <EditText
             android:id="@+id/etCompose"

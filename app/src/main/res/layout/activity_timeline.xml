@@ -4,16 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:backgroundTint="#E91E63"
     android:orientation="vertical"
-    tools:context=".TimelineActivity">
-
-
-   <!-- <Button
-        android:id="@+id/signOffBttn"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/signOffBttn_height"
-        android:text="@string/signOffBttn_text" /> -->
+    tools:context=".activities.TimelineActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"

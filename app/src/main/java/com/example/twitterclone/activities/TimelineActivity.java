@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -15,6 +16,9 @@ import android.widget.Toast;
 import com.example.twitterclone.codepathResources.EndlessRecyclerViewScrollListener;
 import com.example.twitterclone.R;
 import com.example.twitterclone.TwitterApp;
+import com.example.twitterclone.models.TweetDao;
+import com.example.twitterclone.models.TweetWithUser;
+import com.example.twitterclone.models.User;
 import com.example.twitterclone.network.TwitterClient;
 import com.example.twitterclone.adapters.TweetsAdapter;
 import com.example.twitterclone.models.Tweet;
@@ -47,17 +51,19 @@ public class TimelineActivity extends AppCompatActivity {
 
     //fields:
     TwitterClient client;       //to make network requests via the Twitter API
+    TweetDao tweetDao;          //to talk to the database
 
     RecyclerView rvTweets;
-    List<Tweet> tweets;
     TweetsAdapter tweetsAdapter;
+    List<Tweet> tweets;
 
     SwipeRefreshLayout swipeContainer;                   //To refresh the page with new tweets
     EndlessRecyclerViewScrollListener scrollListener;       //To allow endless scrolling
 
     @Override
     /**
-     * Purpose:         Called on when the activity is launched automatically. Initalizes all fields, sets up the RecyclerView and refresh and scroll listeners. Utilizes populateTimeline() to obtain and display Tweets.
+     * Purpose:         Called on when the activity is launched automatically. Initalizes all fields, sets up the RecyclerView and refresh and scroll listeners. Will query and display the most recently stored Tweets in the database. Then
+     *                  Utilizes populateTimeline() to make network request and display new recent Tweets.
      */
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,6 +75,7 @@ public class TimelineActivity extends AppCompatActivity {
         rvTweets = findViewById(R.id.rvTweets);
         tweetsAdapter = new TweetsAdapter(this, tweets);
         swipeContainer = findViewById(R.id.swipeContainer);
+        tweetDao = ((TwitterApp) getApplicationContext()).getMyDatabase().TweetDao();
 
         //2.) Set up the SwipeRefreshLayout: Set color of icon, and onRefreshListener --> get new tweets
         swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright, android.R.color.holo_green_light, android.R.color.holo_orange_light, android.R.color.holo_red_light);
@@ -95,7 +102,25 @@ public class TimelineActivity extends AppCompatActivity {
             };
         rvTweets.addOnScrollListener(scrollListener);
 
-        //4.) Get data into List<Tweets> and display them
+        //4.) If there are already Tweets in the database from previous runs of the app --> Upload the most recently stored tweets from the database
+        // **No network requests necessary --> allows for persistence of data
+        AsyncTask.execute(new Runnable() {
+            @Override
+            public void run() {
+                Log.i(TAG, "onCreate(): getting recent Tweets from database");
+                //4a.) Query database:
+                List<TweetWithUser> tweetWithUsers = tweetDao.recentItems();            //recentItems() only returns up to 5 TweetWithUser objects
+
+                //4b.) Separate Tweet objects from TweetWithUser objects
+                List<Tweet> tweetsFromDB = TweetWithUser.getTweetList(tweetWithUsers);
+
+                //4c.) Display Tweets through the adapter
+                tweetsAdapter.clear();
+                tweetsAdapter.addAll(tweetsFromDB);
+            }
+        });
+
+        //5.) Make network request to get new recent data into List<Tweets> and display them
         populateHomeTimeLine();
     }
 
@@ -180,7 +205,7 @@ public class TimelineActivity extends AppCompatActivity {
     }
 
     /**
-     * Purpose:     Obtains the most recent Tweets (also allows for refreshment --> is also a handler for SwipeRefreshLayout field "swipeContainer"), notifies the RecyclerView adapter
+     * Purpose:     Obtains the most recent Tweets (also allows for refreshment --> is also a handler for SwipeRefreshLayout field "swipeContainer"), notifies the RecyclerView adapter, inserts the new data into the database
      */
     private void populateHomeTimeLine() {
         //Makes network request via TwitterClient{},
@@ -191,11 +216,27 @@ public class TimelineActivity extends AppCompatActivity {
                 //1.) Get the array of Tweets:
                 JSONArray jsonArray = json.jsonArray;
                 try {
+                    //2.) Convert into Tweet objects
+                    final List<Tweet> tweets = Tweet.fromJsonArray(jsonArray);
+
                     tweetsAdapter.clear();      //allows refreshment of page
 
-                    //2.) Convert into Tweet objects, append the new Tweets and notify adapter of change:
-                    tweetsAdapter.addAll(Tweet.fromJsonArray(jsonArray));
+                    //3.) Append the new Tweets and notify adapter of change:
+                    tweetsAdapter.addAll(tweets);
                     swipeContainer.setRefreshing(false);            //tells SwipeRefreshLayout's listener done refreshing
+
+                    //4.) Insert the new Tweets into the database
+                    AsyncTask.execute(new Runnable() {
+                        @Override
+                        public void run() {
+                            Log.i(TAG, "Saving data into database");
+                            //4a.) Extract Users and insert them first so foreign key connection works
+                            List<User> users = User.fromTweetList(tweets);
+                            tweetDao.insertUser(users.toArray(new User[0]));        //converted to array b/c query requires it
+
+                            tweetDao.insertTweet(tweets.toArray(new Tweet[0]));
+                        }
+                    });
                 } catch (JSONException e) {
                     Log.e(TAG, "populateHomeTimeLine(): onSuccess(): Json exception", e);
                 }
