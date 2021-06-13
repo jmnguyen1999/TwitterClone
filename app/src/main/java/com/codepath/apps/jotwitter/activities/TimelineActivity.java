@@ -1,11 +1,13 @@
 package com.codepath.apps.jotwitter.activities;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 
 import com.codepath.apps.jotwitter.R;
 import com.codepath.apps.jotwitter.TweetAdapter;
@@ -14,7 +16,9 @@ import com.codepath.apps.jotwitter.TwitterClient;
 import com.codepath.apps.jotwitter.databinding.ActivityTimelineBinding;
 import com.codepath.apps.jotwitter.models.Tweet;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -33,7 +37,7 @@ public class TimelineActivity extends AppCompatActivity {
     RecyclerView rvTweets;
     TweetAdapter tweetAdapter;
     List<Tweet> tweets;
-
+    BottomNavigationView bottomNavBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +47,31 @@ public class TimelineActivity extends AppCompatActivity {
 
         tweets = new ArrayList<>();
         client = TwitterApp.getRestClient(this);
+        bottomNavBar = binding.bottomNavigation;
+
+        //Set up bottom navigation:
+        bottomNavBar.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull @NotNull MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.action_home:
+                        //stay here
+                        return true;
+                    case R.id.action_search:
+                        // do something here
+                        return true;
+                    case R.id.action_notification:
+                        // do something here
+                        return true;
+                    case R.id.action_message:
+                        // do something here
+                        return true;
+                    default: return true;
+                }
+            }
+        });
+        bottomNavBar.setSelectedItemId(R.id.action_home);           //display home
+
 
         //Set up recycler view:
         rvTweets = binding.rvTweets;

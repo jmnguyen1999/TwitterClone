@@ -1,6 +1,7 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <style name="AppBaseTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+
         <!--
             Theme customizations available in newer API levels can go in
             res/values-vXX/styles.xml, while customizations related to
@@ -11,6 +12,16 @@
     <!-- Application theme. -->
     <style name="AppTheme" parent="AppBaseTheme">
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/twitter_blue</item>
+        <item name="colorPrimaryVariant">@color/twitter_blue</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/twitter_black</item>
+        <item name="colorSecondaryVariant">@color/twitter_dark_gray</item>
+        <item name="colorOnSecondary">@color/twitter_light_gray</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
     </style>
 
 </resources>
