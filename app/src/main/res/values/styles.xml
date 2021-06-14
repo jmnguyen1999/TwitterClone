@@ -13,10 +13,10 @@
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
         <!-- Primary brand color. -->
-       <!-- <item name="colorPrimary">@color/twitter_blue</item>
+        <item name="colorPrimary">@color/twitter_blue</item>
         <item name="colorPrimaryVariant">@color/twitter_blue</item>
         <item name="colorOnPrimary">@color/white</item>
-        <!- Secondary brand color.
+        <!-- Secondary brand color.
         <item name="colorSecondary">@color/twitter_black</item>
         <item name="colorSecondaryVariant">@color/twitter_dark_gray</item>
         <item name="colorOnSecondary">@color/twitter_light_gray</item> -->

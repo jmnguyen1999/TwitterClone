@@ -119,6 +119,7 @@ public class TimelineActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(TimelineActivity.this, ComposeActivity.class);
+                i.putExtra(ComposeActivity.KEY_PURPOSE, ComposeActivity.COMPOSE_FUNCTION);
                 startActivityForResult(i, COMPOSE_REQUEST_CODE);
             }
         });

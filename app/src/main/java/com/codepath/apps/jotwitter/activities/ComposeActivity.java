@@ -41,7 +41,7 @@ public class ComposeActivity extends AppCompatActivity {
     private static final int MAX_LENGTH = 280;
 
     //Constants to ensure value for KEY_PURPOSE --> one of these.
-    private static final String COMPOSE_FUNCTION = "function = to compose!";
+    public static final String COMPOSE_FUNCTION = "function = to compose!";
     public static final String REPLY_FUNCTION = "function = to reply!";
 
     ActivityComposeBinding binding;
@@ -138,7 +138,6 @@ public class ComposeActivity extends AppCompatActivity {
     //Purpose:      Sets up the activity to do reply functions!
     public void setUpReplyFunctions(){
         Log.d(TAG, "setUpReply!");
-        replyFeaturesContainer.setVisibility(View.VISIBLE);
         //1.) Get the Tweet and necessary info:
         Intent receivedData = getIntent();
         Tweet tweetReplyTo = Parcels.unwrap(receivedData.getParcelableExtra(KEY_REPLY_TO));
