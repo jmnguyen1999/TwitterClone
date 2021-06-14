@@ -1,24 +1,34 @@
-package com.codepath.apps.jotwitter;
+package com.codepath.apps.jotwitter.adapters;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.codepath.apps.jotwitter.R;
+import com.codepath.apps.jotwitter.activities.ComposeActivity;
+import com.codepath.apps.jotwitter.activities.TimelineActivity;
 import com.codepath.apps.jotwitter.databinding.ItemTweetBinding;
 import com.codepath.apps.jotwitter.models.Tweet;
 import com.codepath.apps.jotwitter.models.User;
 
 import org.jetbrains.annotations.NotNull;
+import org.parceler.Parcels;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import javax.xml.transform.Result;
 
 public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> {
     private static final String TAG = "TweetAdapter";
@@ -43,7 +53,7 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
     @Override
     public void onBindViewHolder(@NonNull @NotNull TweetAdapter.ViewHolder holder, int position) {
         Tweet tweet = tweets.get(position);
-        holder.bind(tweet);
+        holder.bind(tweet, position);
     }
 
     @Override
@@ -68,6 +78,9 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
         TextView tvTimeCreated;
         TextView tvBody;
         ImageView ivEmbeddedImage;
+        //ListView embeddedImageContainer;
+
+        ImageView ivComment;
 
         public ViewHolder(@NonNull @NotNull View itemView) {
             super(itemView);
@@ -76,19 +89,26 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
             tvName = binding.tvOtherName;
             tvTimeCreated = binding.tvTimeCreated;
             tvBody = binding.tvBody;
+         //   embeddedImageContainer = binding.embeddedImagesContainer;
             ivEmbeddedImage = binding.ivEmbeddedImage;
+            ivComment = binding.icCommentIcon;
         }
 
-        public void bind(Tweet tweet){
+        public void bind(Tweet tweet, int position){
+            //1.) Populate data to the views:
             User user = tweet.getUser();
-
-            Log.d(TAG, "hasMedia = " + tweet.getHasMedia());
-            if(tweet.getHasMedia()){
-                ivEmbeddedImage.getLayoutParams().height = (int) context.getResources().getDimension(R.dimen.embedded_image_height);
-                List<String> embeddedImageUrls = tweet.getEmbeddedImages();
+            if(!(tweet.getHasMedia())){
+                ivEmbeddedImage.setVisibility(View.GONE);
+            }
+            else{
+             //   embeddedImageContainer.getLayoutParams().height = (int) context.getResources().getDimension(R.dimen.embedded_image_height);
+                //ivEmbeddedImage.getLayoutParams().height = (int) context.getResources().getDimension(R.dimen.embedded_image_height);
+                ArrayList<String> embeddedImageUrls = tweet.getEmbeddedImages();
                 Log.d(TAG, "media urls = " + embeddedImageUrls.toString());
-                //Just populate the first one:
                 Glide.with(context).load(embeddedImageUrls.get(0)).into(ivEmbeddedImage);
+                //Set up ListView:
+              /*  EmbeddedImageAdapter imageAdapter = new EmbeddedImageAdapter(context, embeddedImageUrls);
+                embeddedImageContainer.setAdapter(imageAdapter);*/
             }
 
             tvName.setText(user.getName());
@@ -97,6 +117,22 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
             Glide.with(context)
                     .load(user.getProfileUrl())
                     .into(ivProfilePic);
+
+            //2.) Set on click listeners:
+            //2a.) On comment button --> go to ComposeActivity to reply to the given user:
+            ivComment.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent toComposeActivity = new Intent(context, ComposeActivity.class);
+                    //1. Tell ComposeActivity that we want you to set up for REPLYING and not Composing, also, here's the username we're replying to:
+                    toComposeActivity.putExtra(ComposeActivity.KEY_PURPOSE, ComposeActivity.REPLY_FUNCTION);
+                    toComposeActivity.putExtra(ComposeActivity.KEY_REPLY_TO, Parcels.wrap(tweet));
+                    toComposeActivity.putExtra(ComposeActivity.KEY_TWEET_POSITION, position);               //heres the placement of the Tweet in the recyclerview btw
+
+                    //2. Start the intent and expect to get the result in TimelineActivty under the request code (arbitrary) "REPLY_REQUEST_CODE":
+                    ((Activity) context).startActivityForResult(toComposeActivity, TimelineActivity.REPLY_REQUEST_CODE);
+                }
+            });
         }
     }
 }

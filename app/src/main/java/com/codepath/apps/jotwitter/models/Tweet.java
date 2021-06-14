@@ -15,6 +15,7 @@ public class Tweet {
 
     private String body;
     private String createdAt;
+    private String id;
     private User user;
     private boolean hasMedia;
     private List<String> embeddedImages;
@@ -26,6 +27,7 @@ public class Tweet {
         tweet.body = jsonTweet.getString("text");
         tweet.createdAt = jsonTweet.getString("created_at");
         tweet.user = User.fromJson(jsonTweet.getJSONObject("user"));
+        tweet.id = jsonTweet.getString("id_str");
         JSONObject entities = jsonTweet.getJSONObject("entities");
 
         if(entities.has("media")){
@@ -67,11 +69,16 @@ public class Tweet {
     public String getCreatedAt(){
         return createdAt;
     }
-    public List<String> getEmbeddedImages(){
-        return embeddedImages;
+    public ArrayList<String> getEmbeddedImages(){
+        ArrayList<String> images = new ArrayList<>();
+        images.addAll(embeddedImages);
+        return images;
     }
     public boolean getHasMedia(){
         return hasMedia;
+    }
+    public String getId(){
+        return id;
     }
 
 }

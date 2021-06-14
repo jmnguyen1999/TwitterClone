@@ -10,18 +10,23 @@
     </style>
 
     <!-- Application theme. -->
-    <style name="AppTheme" parent="AppBaseTheme">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/twitter_blue</item>
+       <!-- <item name="colorPrimary">@color/twitter_blue</item>
         <item name="colorPrimaryVariant">@color/twitter_blue</item>
         <item name="colorOnPrimary">@color/white</item>
-        <!-- Secondary brand color. -->
+        <!- Secondary brand color.
         <item name="colorSecondary">@color/twitter_black</item>
         <item name="colorSecondaryVariant">@color/twitter_dark_gray</item>
-        <item name="colorOnSecondary">@color/twitter_light_gray</item>
+        <item name="colorOnSecondary">@color/twitter_light_gray</item> -->
         <!-- Status bar color. -->
-        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+       <!-- <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>-->
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowTranslucentNavigation">true</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
     </style>
 
     <style name="validCount">
@@ -30,5 +35,9 @@
 
     <style name="invalidCount">
         <item name="android:textColor">@color/twitter_black</item>
+    </style>
+
+    <style name="ToolbarTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+
     </style>
 </resources>

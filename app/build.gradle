@@ -78,4 +78,7 @@ dependencies {
 
     //For SwipeRefreshLayout:
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.0.0'
+
+    //For Toolbar:
+    implementation 'androidx.appcompat:appcompat:1.0.0'
 }

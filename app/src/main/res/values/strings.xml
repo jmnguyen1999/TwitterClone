@@ -6,5 +6,5 @@
     <string name="intent_scheme">oauth</string>
     <string name="intent_host">cprest</string>
     <string name="tweet">Tweet</string>
-
+    <string name="sample_reply_user">fromis_9</string>
 </resources>

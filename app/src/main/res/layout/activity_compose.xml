@@ -6,47 +6,94 @@
     android:layout_height="match_parent"
     tools:context=".activities.ComposeActivity">
 
-    <ImageView
-        android:id="@+id/ivUserPic"
-        android:layout_width="55dp"
-        android:layout_height="55dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
-        tools:srcCompat="@tools:sample/avatars" />
+    <RelativeLayout
+        android:id="@+id/replyFeatureContainer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/bodyContainer"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="17dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="30dp"
-        android:layout_toEndOf="@+id/ivUserPic"
-        app:counterEnabled="true"
-        app:counterMaxLength="280"
-        app:counterTextAppearance="@style/validCount"
-        app:counterOverflowTextAppearance="@style/invalidCount">
+        <View
+            android:id="@+id/replyLine"
+            android:layout_width="2dp"
+            android:layout_height="40dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="35dp"
+            android:background="@color/twitter_extra_light_gray" />
 
-        <EditText
-            android:id="@+id/etBody"
-            android:layout_width="306dp"
+        <TextView
+            android:id="@+id/tvReplyingToPrompt"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:background="@android:color/transparent"
-            android:ems="10"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="45dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="-7dp"
+            android:layout_toRightOf="@id/replyLine"
             android:fontFamily="sans-serif"
-            android:gravity="start|top"
-            android:hint="What's happening?"
-            android:inputType="textMultiLine"
-            android:minLines="7"
-            android:textSize="18sp" />
-    </com.google.android.material.textfield.TextInputLayout>
+            android:text="Replying to "
+            android:textColor="@color/twitter_light_gray" />
+
+        <TextView
+            android:id="@+id/tvWhoReply"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="10dp"
+            android:layout_toEndOf="@+id/tvReplyingToPrompt"
+            android:textColor="@color/twitter_blue"
+            tools:text="@string/sample_reply_user" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/editPostContainer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/replyFeatureContainer"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="30dp">
+
+        <ImageView
+            android:id="@+id/ivUserPic"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            tools:srcCompat="@tools:sample/avatars" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/bodyContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="17dp"
+            android:layout_marginTop="-11dp"
+            android:layout_toEndOf="@+id/ivUserPic"
+            app:counterEnabled="true"
+            app:counterMaxLength="280"
+            app:counterOverflowTextAppearance="@style/invalidCount"
+            app:counterTextAppearance="@style/validCount">
+
+
+            <EditText
+                android:id="@+id/etBody"
+                android:layout_width="306dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:background="@android:color/transparent"
+                android:ems="10"
+                android:fontFamily="sans-serif"
+                android:gravity="start|top"
+                android:hint="What's happening?"
+                android:inputType="textMultiLine"
+                android:minLines="7"
+                android:textSize="18sp" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+    </RelativeLayout>
 
     <Button
         android:id="@+id/btnCompose"
         android:layout_width="85dp"
         android:layout_height="30dp"
-        android:layout_below="@+id/bodyContainer"
+        android:layout_below="@+id/editPostContainer"
         android:layout_alignParentEnd="true"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="30dp"
