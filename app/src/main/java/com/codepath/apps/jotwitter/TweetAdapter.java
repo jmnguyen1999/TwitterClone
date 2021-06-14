@@ -1,6 +1,7 @@
 package com.codepath.apps.jotwitter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +21,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 
 public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> {
+    private static final String TAG = "TweetAdapter";
 
     ItemTweetBinding binding;
     List<Tweet> tweets;
@@ -49,12 +51,23 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
         return tweets.size();
     }
 
+    public void clear(){
+        tweets.clear();
+        notifyDataSetChanged();
+    }
+
+    public void addAll(List<Tweet> list){
+        tweets.addAll(list);
+        notifyDataSetChanged();
+    }
+
     public class ViewHolder extends RecyclerView.ViewHolder{
 
         ImageView ivProfilePic;
         TextView tvName;
         TextView tvTimeCreated;
         TextView tvBody;
+        ImageView ivEmbeddedImage;
 
         public ViewHolder(@NonNull @NotNull View itemView) {
             super(itemView);
@@ -63,10 +76,20 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
             tvName = binding.tvOtherName;
             tvTimeCreated = binding.tvTimeCreated;
             tvBody = binding.tvBody;
+            ivEmbeddedImage = binding.ivEmbeddedImage;
         }
 
         public void bind(Tweet tweet){
             User user = tweet.getUser();
+
+            Log.d(TAG, "hasMedia = " + tweet.getHasMedia());
+            if(tweet.getHasMedia()){
+                ivEmbeddedImage.getLayoutParams().height = (int) context.getResources().getDimension(R.dimen.embedded_image_height);
+                List<String> embeddedImageUrls = tweet.getEmbeddedImages();
+                Log.d(TAG, "media urls = " + embeddedImageUrls.toString());
+                //Just populate the first one:
+                Glide.with(context).load(embeddedImageUrls.get(0)).into(ivEmbeddedImage);
+            }
 
             tvName.setText(user.getName());
             tvBody.setText(tweet.getBody());

@@ -2,13 +2,17 @@ package com.codepath.apps.jotwitter.models;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.parceler.Parcel;
 
 import java.io.File;
 
+@Parcel
 public class User {
     private String username;
     private String profileUrl;
     private String name;
+
+    public User(){}
 
     public static User fromJson(JSONObject jsonUser) throws JSONException {
         User user = new User();

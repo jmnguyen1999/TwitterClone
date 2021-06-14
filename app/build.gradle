@@ -71,4 +71,11 @@ dependencies {
 
     //Recycler view:
     implementation "androidx.recyclerview:recyclerview:${recyclerViewVersion}"
+
+    //For Parceler:
+    implementation 'org.parceler:parceler-api:1.1.12'
+    annotationProcessor 'org.parceler:parceler:1.1.12'
+
+    //For SwipeRefreshLayout:
+    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.0.0'
 }

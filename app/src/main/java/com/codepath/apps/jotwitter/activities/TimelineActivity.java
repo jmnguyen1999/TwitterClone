@@ -1,13 +1,17 @@
 package com.codepath.apps.jotwitter.activities;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.codepath.apps.jotwitter.R;
 import com.codepath.apps.jotwitter.TweetAdapter;
@@ -17,6 +21,7 @@ import com.codepath.apps.jotwitter.databinding.ActivityTimelineBinding;
 import com.codepath.apps.jotwitter.models.Tweet;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
@@ -30,6 +35,8 @@ import okhttp3.Headers;
 
 public class TimelineActivity extends AppCompatActivity {
     private static final String TAG = "TimelineActivity";
+    private static final String KEY_COMPOSE_TWEET = "tweetFromComposeActivity";
+    private static final int COMPOSE_REQUEST_CODE = 1234;
 
     ActivityTimelineBinding binding;
 
@@ -37,7 +44,10 @@ public class TimelineActivity extends AppCompatActivity {
     RecyclerView rvTweets;
     TweetAdapter tweetAdapter;
     List<Tweet> tweets;
-    BottomNavigationView bottomNavBar;
+    FloatingActionButton fabCompose;
+    SwipeRefreshLayout swipeContainer;
+
+   // BottomNavigationView bottomNavBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +57,9 @@ public class TimelineActivity extends AppCompatActivity {
 
         tweets = new ArrayList<>();
         client = TwitterApp.getRestClient(this);
+        fabCompose = binding.fabCompose;
+        swipeContainer = binding.swipeContainer;
+        /* This would require us to use Fragments! So let's not implement it for the sake of following the assignment!
         bottomNavBar = binding.bottomNavigation;
 
         //Set up bottom navigation:
@@ -55,7 +68,7 @@ public class TimelineActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull @NotNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.action_home:
-                        //stay here
+
                         return true;
                     case R.id.action_search:
                         // do something here
@@ -70,8 +83,29 @@ public class TimelineActivity extends AppCompatActivity {
                 }
             }
         });
-        bottomNavBar.setSelectedItemId(R.id.action_home);           //display home
+        bottomNavBar.setSelectedItemId(R.id.action_home);           //display home */
 
+        //Set up swipeContainer:
+        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                populateHomeTimeline();
+            }
+        });
+        swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light);
+
+
+        //Set up fabCompose:
+        fabCompose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(TimelineActivity.this, ComposeActivity.class);
+                startActivityForResult(i, COMPOSE_REQUEST_CODE);
+            }
+        });
 
         //Set up recycler view:
         rvTweets = binding.rvTweets;
@@ -91,8 +125,9 @@ public class TimelineActivity extends AppCompatActivity {
                 //get the list of tweets:
                 JSONArray jsonResponse = json.jsonArray;
                 try {
-                    tweets.addAll(Tweet.fromJsonArray(jsonResponse));
-                    tweetAdapter.notifyDataSetChanged();
+                    tweetAdapter.clear();
+                    tweetAdapter.addAll(Tweet.fromJsonArray(jsonResponse));
+                    swipeContainer.setRefreshing(false);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -103,5 +138,19 @@ public class TimelineActivity extends AppCompatActivity {
                 Log.e(TAG, "onFailure, e=", throwable);
             }
         });
+    }
+
+    @Override
+    //Purpose:          To handle the result from ComposeActivity!
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable @org.jetbrains.annotations.Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(requestCode == COMPOSE_REQUEST_CODE && resultCode == RESULT_OK){
+            Log.d(TAG, "compose activity was a success!");
+            Tweet newTweet = data.getParcelableExtra(KEY_COMPOSE_TWEET);
+            tweets.add(newTweet);
+            tweetAdapter.notifyItemInserted(0);
+            rvTweets.smoothScrollToPosition(0);             //scroll up to see the new tweet
+        }
     }
 }
