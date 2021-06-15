@@ -87,4 +87,8 @@ dependencies {
     //For Vector drawables:
     implementation "androidx.vectordrawable:vectordrawable:1.0.0" // VectorDrawableCompat
     implementation "androidx.vectordrawable:vectordrawable-animated:1.0.0" // AnimatedVectorDrawableCompat
+
+    //For Glide Transformations:
+    implementation 'jp.wasabeef:glide-transformations:4.1.0'
+    implementation 'jp.co.cyberagent.android:gpuimage:2.0.4'
 }

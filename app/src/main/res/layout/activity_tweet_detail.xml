@@ -18,95 +18,199 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
-        <ImageView
-            android:id="@+id/ivOtherProfile"
-            android:layout_width="50dp"
-            android:layout_height="51dp"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="10dp"
-            tools:srcCompat="@tools:sample/avatars" />
-
         <RelativeLayout
             android:id="@+id/rlContent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="15dp"
-            android:layout_toRightOf="@id/ivOtherProfile">
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="20dp">
+
+            <ImageView
+                android:id="@+id/ivOtherProfile"
+                android:layout_width="50dp"
+                android:layout_height="51dp"
+                android:adjustViewBounds="true"
+                android:cropToPadding="true"
+                android:scaleType="fitXY"
+                tools:srcCompat="@tools:sample/avatars" />
 
             <TextView
                 android:id="@+id/tvOtherName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_toRightOf="@id/ivOtherProfile"
+                android:textColor="@color/twitter_black"
                 android:textStyle="bold"
                 tools:text="fromis_9" />
 
             <TextView
-                android:id="@+id/tvTimeCreated"
+                android:id="@+id/tvUsername"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_marginEnd="15dp"
-                android:textColor="@android:color/darker_gray"
-                tools:text="2d" />
+                android:layout_below="@+id/tvOtherName"
+                android:layout_marginStart="10dp"
+                android:layout_toEndOf="@+id/ivOtherProfile"
+                android:textColor="@color/twitter_dark_gray"
+                android:textSize="12sp"
+                tools:text="fromis321" />
 
             <TextView
                 android:id="@+id/tvBody"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/tvOtherName"
-                android:layout_marginTop="5dp"
+                android:layout_below="@id/ivOtherProfile"
+                android:layout_marginTop="15dp"
+                android:textColor="@color/twitter_black"
+                android:textSize="18sp"
                 tools:text="dlfsdjflksjadflksjadlkfjsalkdfjajksdflkajsdflasjdfklajsdkfljasldfjalskjfdksdjfaksjfksjf" />
 
             <ImageView
                 android:id="@+id/ivEmbeddedImage"
-                android:layout_width="match_parent"
-                android:layout_height="150dp"
+                android:layout_width="370dp"
+                android:layout_height="190dp"
                 android:layout_below="@+id/tvBody"
-                android:layout_marginTop="10dp"
+                android:layout_centerHorizontal="false"
+                android:layout_marginTop="20dp"
                 android:adjustViewBounds="true"
                 android:cropToPadding="true"
                 android:scaleType="fitXY"
                 tools:srcCompat="@tools:sample/backgrounds/scenic" />
 
-            <ImageView
-                android:id="@+id/icCommentIcon"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+            <RelativeLayout
+                android:id="@+id/timestampContainer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_below="@id/ivEmbeddedImage"
-                android:layout_marginTop="5dp"
-                app:srcCompat="@drawable/comment_icon" />
+                android:layout_marginTop="15dp">
 
-            <ImageView
-                android:id="@+id/ivRetweetIcon"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_below="@+id/ivEmbeddedImage"
-                android:layout_marginStart="60dp"
-                android:layout_marginTop="5dp"
-                android:layout_toEndOf="@+id/icCommentIcon"
-                app:srcCompat="@drawable/ic_vector_retweet_stroke" />
+                <TextView
+                    android:id="@+id/tvTimestamp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/twitter_dark_gray"
+                    tools:text="1:04 AM  . " />
 
-            <ImageView
-                android:id="@+id/ivFavoriteIcon"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_below="@+id/ivEmbeddedImage"
-                android:layout_marginStart="60dp"
-                android:layout_marginTop="5dp"
-                android:layout_toEndOf="@+id/ivRetweetIcon"
-                app:srcCompat="@drawable/ic_vector_heart_stroke" />
+                <TextView
+                    android:id="@+id/tvDatestamp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/tvTimestamp"
+                    android:textColor="@color/twitter_dark_gray"
+                    tools:text=" 6/12/ 21  . " />
 
-            <ImageView
-                android:id="@+id/ivShareIcon"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_below="@+id/ivEmbeddedImage"
-                android:layout_marginStart="60dp"
-                android:layout_marginTop="5dp"
-                android:layout_toEndOf="@+id/ivFavoriteIcon"
-                app:srcCompat="@drawable/share_icon" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/tvDatestamp"
+                    android:text="Twitter for Android"
+                    android:textColor="@color/twitter_blue" />
+
+            </RelativeLayout>
+
+            <View
+                android:id="@+id/firstDivider"
+                android:layout_width="wrap_content"
+                android:layout_height="0.5dp"
+                android:layout_below="@id/timestampContainer"
+                android:layout_marginTop="10dp"
+                android:background="@color/twitter_light_gray" />
+
+            <RelativeLayout
+                android:id="@+id/retweetsAndLikesContainer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/firstDivider"
+                android:layout_marginTop="5dp">
+
+                <TextView
+                    android:id="@+id/retweetValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/twitter_dark_gray"
+                    android:textStyle="bold"
+                    tools:text="2" />
+
+                <TextView
+                    android:id="@+id/tvRetweet"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/retweetValue"
+                    android:text=" Retweets  "
+                    android:textColor="@color/twitter_dark_gray" />
+
+                <TextView
+                    android:id="@+id/likesValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/tvRetweet"
+                    android:textColor="@color/twitter_dark_gray"
+                    android:textStyle="bold"
+                    tools:text="47" />
+
+                <TextView
+                    android:id="@+id/tvLikes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/likesValue"
+                    android:text=" Likes"
+                    android:textColor="@color/twitter_dark_gray" />
+            </RelativeLayout>
+
+            <View
+                android:id="@+id/secondDivider"
+                android:layout_width="wrap_content"
+                android:layout_height="0.5dp"
+                android:layout_below="@id/retweetsAndLikesContainer"
+                android:layout_marginTop="9dp"
+                android:layout_marginBottom="5dp"
+                android:background="@color/twitter_light_gray" />
+
+            <RelativeLayout
+                android:id="@+id/rlIconContainer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/secondDivider"
+                android:layout_centerHorizontal="true">
+
+                <ImageView
+                    android:id="@+id/icCommentIcon"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginTop="5dp"
+                    app:srcCompat="@drawable/comment_icon" />
+
+                <ImageView
+                    android:id="@+id/ivRetweetIcon"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginStart="65dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_toEndOf="@+id/icCommentIcon"
+                    app:srcCompat="@drawable/ic_vector_retweet_stroke" />
+
+                <ImageView
+                    android:id="@+id/ivFavoriteIcon"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginStart="65dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_toEndOf="@+id/ivRetweetIcon"
+                    app:srcCompat="@drawable/ic_vector_heart_stroke" />
+
+                <ImageView
+                    android:id="@+id/ivShareIcon"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginStart="65dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_toEndOf="@+id/ivFavoriteIcon"
+                    app:srcCompat="@drawable/share_icon" />
+
+            </RelativeLayout>
 
             <!--
             <ListView
@@ -124,10 +228,20 @@
             android:layout_marginTop="10dp"
             android:background="@color/light_gray" />
 
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginRight="20dp"
+            android:text="..."
+            android:textColor="@color/twitter_dark_gray"
+            android:textSize="30sp" />
+
     </RelativeLayout>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvRelies"
+        android:id="@+id/rvReplies"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 </LinearLayout>

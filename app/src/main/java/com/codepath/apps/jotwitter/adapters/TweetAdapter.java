@@ -16,6 +16,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.codepath.apps.jotwitter.R;
 import com.codepath.apps.jotwitter.activities.ComposeActivity;
 import com.codepath.apps.jotwitter.activities.TimelineActivity;
@@ -30,6 +31,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.xml.transform.Result;
+
+import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
 public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> {
     private static final String TAG = "TweetAdapter";
@@ -56,18 +59,21 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
     @NotNull
     @Override
     public TweetAdapter.ViewHolder onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
+        Log.d(TAG, "onCreatieView");
         binding = ItemTweetBinding.inflate(LayoutInflater.from(context), parent, false);
         return new TweetAdapter.ViewHolder(binding.getRoot());
     }
 
     @Override
     public void onBindViewHolder(@NonNull @NotNull TweetAdapter.ViewHolder holder, int position) {
+        Log.d(TAG, "onBindViewHolder");
         Tweet tweet = tweets.get(position);
         holder.bind(tweet, position);
     }
 
     @Override
     public int getItemCount() {
+        Log.d(TAG, "getItemCount(): size = " + tweets.size());
         return tweets.size();
     }
 
@@ -110,6 +116,7 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
         }
 
         public void bind(Tweet tweet, int position){
+            Log.d(TAG, "binding postion: " + position);
             //1.) Populate data to the views:
             User user = tweet.getUser();
             if(!(tweet.getHasMedia())){
@@ -120,7 +127,10 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
                 //ivEmbeddedImage.getLayoutParams().height = (int) context.getResources().getDimension(R.dimen.embedded_image_height);
                 ArrayList<String> embeddedImageUrls = tweet.getEmbeddedImages();
                 Log.d(TAG, "media urls = " + embeddedImageUrls.toString());
-                Glide.with(context).load(embeddedImageUrls.get(0)).into(ivEmbeddedImage);
+                Glide.with(context)
+                        .load(embeddedImageUrls.get(0))
+                        .transform(new RoundedCornersTransformation(30, 10))
+                        .into(ivEmbeddedImage);
                 //Set up ListView:
               /*  EmbeddedImageAdapter imageAdapter = new EmbeddedImageAdapter(context, embeddedImageUrls);
                 embeddedImageContainer.setAdapter(imageAdapter);*/
@@ -131,6 +141,8 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
             tvTimeCreated.setText(tweet.getFormattedTimestamp());
             Glide.with(context)
                     .load(user.getProfileUrl())
+                    .centerCrop() // scale image to fill the entire ImageView
+                    .transform(new CircleCrop())
                     .into(ivProfilePic);
 
             //2.) Set on click listeners:

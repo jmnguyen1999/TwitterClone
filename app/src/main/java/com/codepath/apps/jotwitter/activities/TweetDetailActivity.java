@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.codepath.apps.jotwitter.ComposeDialog;
 import com.codepath.apps.jotwitter.R;
 import com.codepath.apps.jotwitter.TwitterApp;
@@ -23,11 +24,15 @@ import com.codepath.apps.jotwitter.models.Tweet;
 import com.codepath.apps.jotwitter.models.User;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.parceler.Parcels;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 import okhttp3.Headers;
 
 //Purpose:      Displays details of a given Tweet object!
@@ -58,17 +63,16 @@ public class TweetDetailActivity extends AppCompatActivity implements ComposeDia
         setContentView(binding.getRoot());
 
         replies = new ArrayList<>();
-       client = TwitterApp.getRestClient(this);
+        client = TwitterApp.getRestClient(this);
 
         //Get the received Tweet:
         Intent receivedData = getIntent();
         Tweet originalTweet = Parcels.unwrap(receivedData.getParcelableExtra(KEY_DETAIL_ACT));
 
         //Connect Views:
-        rvReplies = binding.rvRelies;
+        rvReplies = binding.rvReplies;
         ivProfilePic = binding.ivOtherProfile;
         tvName = binding.tvOtherName;
-        tvTimeCreated = binding.tvTimeCreated;
         tvBody = binding.tvBody;
         //   embeddedImageContainer = binding.embeddedImagesContainer;
         ivEmbeddedImage = binding.ivEmbeddedImage;
@@ -110,7 +114,7 @@ public class TweetDetailActivity extends AppCompatActivity implements ComposeDia
 
         String tweetId = originalTweet.getId();
         Log.d(TAG, "tweetId given = " + tweetId);
-        getAllReplies(originalTweet.getUser().getId());
+        getAllReplies(originalTweet.getUser().getUsername(), tweetId);
     }
 
     public void populateOriginalTweet(Tweet tweet){
@@ -123,7 +127,10 @@ public class TweetDetailActivity extends AppCompatActivity implements ComposeDia
             //ivEmbeddedImage.getLayoutParams().height = (int) context.getResources().getDimension(R.dimen.embedded_image_height);
             ArrayList<String> embeddedImageUrls = tweet.getEmbeddedImages();
             Log.d(TAG, "media urls = " + embeddedImageUrls.toString());
-            Glide.with(this).load(embeddedImageUrls.get(0)).into(ivEmbeddedImage);
+            Glide.with(this)
+                    .load(embeddedImageUrls.get(0))
+                    .transform(new RoundedCornersTransformation(30, 10))
+                    .into(ivEmbeddedImage);
             //Set up ListView:
               /*  EmbeddedImageAdapter imageAdapter = new EmbeddedImageAdapter(context, embeddedImageUrls);
                 embeddedImageContainer.setAdapter(imageAdapter);*/
@@ -131,30 +138,57 @@ public class TweetDetailActivity extends AppCompatActivity implements ComposeDia
 
         tvName.setText(user.getName());
         tvBody.setText(tweet.getBody());
-        tvTimeCreated.setText(tweet.getFormattedTimestamp());
         Glide.with(this)
                 .load(user.getProfileUrl())
+                .centerCrop() // scale image to fill the entire ImageView
+                .transform(new CircleCrop())
                 .into(ivProfilePic);
     }
 
     //Purpose:      Get all the replies to the given tweet id.
-    public void getAllReplies(String userId){
-        client.getRepliesToUser(userId, new JsonHttpResponseHandler() {
+    public void getAllReplies(String username, String tweetId){
+        client.getRepliesToUser(username, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Headers headers, JSON json) {
                 Log.d(TAG, "successful getting replies");
-                Log.d(TAG, "array = " + json.jsonObject.toString());
+                JSONObject jsonResponse = json.jsonObject;
+                try {
+                    JSONArray jsonStatuses = jsonResponse.getJSONArray("statuses");
+
+                    //Only save those whose "in_reply_to_status_id_str" key is the same as the given tweetId
+                    //  (all the tweets in reply to this specific tweet)
+                    List<JSONObject> jsonReplies = new ArrayList<>();
+                    Log.d(TAG, Tweet.fromJsonArray(jsonStatuses).toString());
+                    for(int i = 0; i < jsonStatuses.length(); i++){
+                        JSONObject jsonTweet = jsonStatuses.getJSONObject(i);
+                        String otherTweetId = jsonTweet.getString("in_reply_to_status_id_str");
+                        Log.d(TAG, "tweetId given = " + tweetId + "    thisTweetId = " + otherTweetId);
+                        if(otherTweetId.equals(tweetId)) {
+                            jsonReplies.add(jsonTweet);
+                        }
+                    }
+
+                    //Convert all jsonReplies into Tweet objects:
+                    for(int i = 0; i < jsonReplies.size(); i++){
+                        replies.add(Tweet.fromJson(jsonReplies.get(i)));
+                    }
+                    //replies.addAll(Tweet.fromJsonArray(jsonStatuses));
+                    replyAdapter.notifyDataSetChanged();
+                    Log.d(TAG, "replies = " + replies.toString());
+                } catch (JSONException e){
+                    Log.e(TAG, "Error getting statuses array:", e);
+                }
             }
 
             @Override
             public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
-
+                Log.e(TAG, "failure getting replies");
             }
         });
     }
 
     @Override
-    public void composeFinished(Tweet newTweet) { }
+    public void composeFinished(Tweet newTweet) {}
 
     @Override
     public void replyFinished(Tweet tweetRepliedTo) {
