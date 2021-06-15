@@ -15,15 +15,20 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.codepath.apps.jotwitter.ComposeDialog;
 import com.codepath.apps.jotwitter.R;
+import com.codepath.apps.jotwitter.TwitterApp;
+import com.codepath.apps.jotwitter.TwitterClient;
 import com.codepath.apps.jotwitter.adapters.TweetAdapter;
 import com.codepath.apps.jotwitter.databinding.ActivityTweetDetailBinding;
 import com.codepath.apps.jotwitter.models.Tweet;
 import com.codepath.apps.jotwitter.models.User;
+import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 
 import org.parceler.Parcels;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import okhttp3.Headers;
 
 //Purpose:      Displays details of a given Tweet object!
 public class TweetDetailActivity extends AppCompatActivity implements ComposeDialog.Listener{
@@ -31,7 +36,7 @@ public class TweetDetailActivity extends AppCompatActivity implements ComposeDia
     private static final String KEY_DETAIL_ACT = "tweetForDetailActivity";
 
     ActivityTweetDetailBinding binding;
-
+    TwitterClient client;
     List<Tweet> replies;
     RecyclerView rvReplies;
     TweetAdapter replyAdapter;
@@ -53,6 +58,7 @@ public class TweetDetailActivity extends AppCompatActivity implements ComposeDia
         setContentView(binding.getRoot());
 
         replies = new ArrayList<>();
+       client = TwitterApp.getRestClient(this);
 
         //Get the received Tweet:
         Intent receivedData = getIntent();
@@ -104,7 +110,7 @@ public class TweetDetailActivity extends AppCompatActivity implements ComposeDia
 
         String tweetId = originalTweet.getId();
         Log.d(TAG, "tweetId given = " + tweetId);
-        getAllReplies(tweetId);
+        getAllReplies(originalTweet.getUser().getId());
     }
 
     public void populateOriginalTweet(Tweet tweet){
@@ -132,8 +138,19 @@ public class TweetDetailActivity extends AppCompatActivity implements ComposeDia
     }
 
     //Purpose:      Get all the replies to the given tweet id.
-    public void getAllReplies(String tweetId){
-        Log.d(TAG, "getAllReplies");
+    public void getAllReplies(String userId){
+        client.getRepliesToUser(userId, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Headers headers, JSON json) {
+                Log.d(TAG, "successful getting replies");
+                Log.d(TAG, "array = " + json.jsonObject.toString());
+            }
+
+            @Override
+            public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
+
+            }
+        });
     }
 
     @Override

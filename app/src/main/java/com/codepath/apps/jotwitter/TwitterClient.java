@@ -1,6 +1,7 @@
 package com.codepath.apps.jotwitter;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.codepath.asynchttpclient.RequestParams;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
@@ -113,6 +114,16 @@ public class TwitterClient extends OAuthBaseClient {
 		String apiUrl = getApiUrl("friends/list.json");
 		RequestParams params = new RequestParams();
 		params.put("user_id", userId);				//used to get the older tweets after id #
+		client.get(apiUrl, params, handler);
+	}
+
+	public void getRepliesToUser(String userId, JsonHttpResponseHandler handler){
+		//https://api.twitter.com/1.1/search/tweets.json?q=to:thenoodlelifee
+		String apiUrl = getApiUrl("search/tweets.json");
+		String query = "to:"+userId;
+		Log.d("jo", "url = " + REST_URL+ "/search/tweets.json?q="+query);
+		RequestParams params = new RequestParams();
+		params.put("q", query);				//used to get the older tweets after id #
 		client.get(apiUrl, params, handler);
 	}
 }
