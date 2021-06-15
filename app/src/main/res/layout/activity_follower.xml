@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     android:fitsSystemWindows="true"
     android:orientation="vertical">
 
@@ -11,11 +12,57 @@
     <include
         layout="@layout/toolbar_main"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content" />
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".activities.FollowerActivity">
+
+
+        <Button
+            android:id="@+id/btnFollowers"
+            android:layout_width="205dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="0dp"
+            android:background="@android:color/transparent"
+            android:backgroundTint="@android:color/transparent"
+            android:text="Followers"
+            android:textColor="@color/twitter_blue" />
+
+        <View
+            android:id="@+id/selectFollowers"
+            android:layout_width="205dp"
+            android:layout_height="1dp"
+            android:layout_below="@id/btnFollowers"
+            android:background="@color/twitter_blue" />
+
+        <Button
+            android:id="@+id/btnFollowing"
+            android:layout_width="205dp"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/btnFollowers"
+            android:background="@android:color/transparent"
+            android:backgroundTint="@android:color/transparent"
+            android:text="Following"
+            android:textColor="@color/twitter_dark_gray" />
+
+        <View
+            android:id="@+id/selectFollowing"
+            android:layout_width="205dp"
+            android:layout_height="1dp"
+            android:layout_below="@id/btnFollowing"
+            android:layout_toRightOf="@id/btnFollowers"
+            android:background="@color/twitter_blue"
+            android:visibility="invisible" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvFollowers"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/selectFollowers" />
+
 
     </RelativeLayout>
 </LinearLayout>

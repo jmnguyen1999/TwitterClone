@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.codepath.apps.jotwitter.ComposeDialog;
 import com.codepath.apps.jotwitter.EndlessRecyclerViewScrollListener;
 import com.codepath.apps.jotwitter.R;
+import com.codepath.apps.jotwitter.adapters.FollowerAdapter;
 import com.codepath.apps.jotwitter.adapters.TweetAdapter;
 import com.codepath.apps.jotwitter.TwitterApp;
 import com.codepath.apps.jotwitter.TwitterClient;
@@ -300,8 +301,11 @@ public class TimelineActivity extends AppCompatActivity implements ComposeDialog
             }
 
             @Override
+            //Purpose:      Show followers --> go to FollowerActivity
             public void onProfilePicClicked(Tweet tweetClicked) {
-
+                Intent toFollowerAct = new Intent(TimelineActivity.this, FollowerActivity.class);
+                toFollowerAct.putExtra(FollowerActivity.KEY_USER, Parcels.wrap(tweetClicked.getUser()));
+                startActivity(toFollowerAct);
             }
 
             @Override

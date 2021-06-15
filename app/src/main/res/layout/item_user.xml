@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@color/white">
+
+    <ImageView
+        android:id="@+id/ivUserPic"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="20dp"
+        android:adjustViewBounds="true"
+        android:cropToPadding="true"
+        android:scaleType="fitXY"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <Button
+        android:id="@+id/btnFollow"
+        android:layout_width="85dp"
+        android:layout_height="35dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:background="@color/twitter_blue"
+        android:text="Follow"
+        android:textColor="@color/white" />
+
+    <RelativeLayout
+        android:id="@+id/rlInfoContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="30dp"
+        android:layout_toRightOf="@id/ivUserPic">
+
+
+        <TextView
+            android:id="@+id/tvScreenname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/twitter_black"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            tools:text="fromis_9" />
+
+        <TextView
+            android:id="@+id/tvUsername"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvScreenname"
+            android:textColor="@color/light_gray"
+            tools:text="fromis123" />
+
+        <EditText
+            android:id="@+id/etBio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvUsername"
+            android:background="@android:color/transparent"
+            android:ems="10"
+            android:gravity="start|top"
+            android:inputType="textMultiLine"
+            android:minLines="1"
+            android:text="ljsdflkjasld;fja;lsjfdsla;jdf;lasjdf;lksjadflkjasdlfkjas;ldfjaslkdfjaslkdjfj;sdf;las"
+            android:textColor="@color/twitter_dark_gray" />
+
+    </RelativeLayout>
+
+</RelativeLayout>
