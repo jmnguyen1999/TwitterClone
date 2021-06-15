@@ -81,4 +81,11 @@ public class TwitterClient extends OAuthBaseClient {
 		client.post(apiUrl, params, "", handler);
 	}
 
+	public void getNextPageOfTweets(long maxId, JsonHttpResponseHandler handler) {
+		String apiUrl = getApiUrl("statuses/home_timeline.json");
+		RequestParams params = new RequestParams();
+		params.put("max_id", maxId);				//used to get the older tweets after id #
+		client.get(apiUrl, params, handler);
+	}
+
 }

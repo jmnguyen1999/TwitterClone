@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 
+import com.codepath.apps.jotwitter.EndlessRecyclerViewScrollListener;
 import com.codepath.apps.jotwitter.R;
 import com.codepath.apps.jotwitter.adapters.TweetAdapter;
 import com.codepath.apps.jotwitter.TwitterApp;
@@ -55,6 +56,7 @@ public class TimelineActivity extends AppCompatActivity {
     SwipeRefreshLayout swipeContainer;
     ProgressBar progressBar;
     Toolbar toolbar;
+    private EndlessRecyclerViewScrollListener scrollListener;
 
    // BottomNavigationView bottomNavBar;
 
@@ -126,9 +128,30 @@ public class TimelineActivity extends AppCompatActivity {
 
         //Set up recycler view:
         rvTweets = binding.rvTweets;
-        tweetAdapter = new TweetAdapter(this, tweets);
+        TweetAdapter.TweetAdapterListener listener = new TweetAdapter.TweetAdapterListener() {          //Go to TweetDetailActivity!
+            @Override
+            public void onClick(Tweet tweetClicked) {
+                Intent toDetailView = new Intent(TimelineActivity.this, TweetDetailActivity.class);
+                toDetailView.putExtra(KEY_DETAIL_ACT, Parcels.wrap(tweetClicked));
+                startActivity(toDetailView);
+            }
+        };
+        tweetAdapter = new TweetAdapter(this, tweets, listener);
         rvTweets.setAdapter(tweetAdapter);
-        rvTweets.setLayoutManager(new LinearLayoutManager(this));
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        rvTweets.setLayoutManager(layoutManager);
+        scrollListener = new EndlessRecyclerViewScrollListener(layoutManager) {
+            @Override
+            public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
+                // Triggered only when new data needs to be appended to the list
+                // Add whatever code is needed to append new items to the bottom of the list
+                Log.d(TAG, "onLoadMore(): page give = " + page);
+                loadMore();
+            }
+        };
+        // Adds the scroll listener to RecyclerView
+        rvTweets.addOnScrollListener(scrollListener);
+
         populateHomeTimeline();
         progressBar.setVisibility(View.VISIBLE);
     }
@@ -186,4 +209,27 @@ public class TimelineActivity extends AppCompatActivity {
         }
     }
 
+    private void loadMore(){
+        //Make network request via TwitterClient to obtain only the Tweets older than the oldest one we currently have:
+        //Uses TwitterClient's getNextPageOfTweets( lastId, JsonHttpResponseHandler)
+        client.getNextPageOfTweets(tweets.get(tweets.size()-1).getLongId(), new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Headers headers, JSON json) {
+                Log.d(TAG, "loadMoreData(): onSuccess(): json response=" + json.toString());
+                //1.) Get the array of Tweets:
+                JSONArray jsonArray = json.jsonArray;
+                try {
+                    //2.) Convert into Tweet objects, append the new Tweets and notify adapter of change:
+                    tweetAdapter.addAll(Tweet.fromJsonArray(jsonArray));           //addAll() notifies adapter as well
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
+                Log.e(TAG, "loadMoreData(): onFailure()", throwable);
+            }
+        });
+    }
 }

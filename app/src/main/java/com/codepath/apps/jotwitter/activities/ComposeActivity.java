@@ -38,6 +38,8 @@ public class ComposeActivity extends AppCompatActivity {
     public static final String KEY_REPLY_TO = "who are we replying to then?";
     public static final String KEY_TWEET_POSITION = "where in the recycler was this tweet?";        //so we can tell the recycler view to scroll to the updated Tweet later!
     private static final String KEY_COMPOSE_TWEET = "tweetFromComposeActivity";
+    public static final String KEY_TWEET_REPLY_FOR = "what tweet are we replying to?";
+
     private static final int MAX_LENGTH = 280;
 
     //Constants to ensure value for KEY_PURPOSE --> one of these.
@@ -168,20 +170,14 @@ public class ComposeActivity extends AppCompatActivity {
                         @Override
                         public void onSuccess(int statusCode, Headers headers, JSON json) {
                             Log.d(TAG, "successful posting the reply!");
-                            //1.) get the tweet out:
-                            try {
-                                Tweet newTweet = Tweet.fromJson(json.jsonObject);
-
+                            //1.) Send back the tweet we responded to:
                                 Intent sendData = new Intent();
-                                sendData.putExtra(KEY_COMPOSE_TWEET, Parcels.wrap(newTweet));           //send back the new tweet
+                                sendData.putExtra(KEY_COMPOSE_TWEET, Parcels.wrap(tweetReplyTo));           //send back the new tweet
 
                                 //Send back the position of the Tweet passed to us from the TweetAdapter: (so yeah we don't do anything with the position it's just for it to be communicated to the TimelineActivity!)
                                 sendData.putExtra(KEY_TWEET_POSITION, receivedData.getIntExtra(KEY_TWEET_POSITION, -1));
                                 setResult(RESULT_OK, sendData);
                                 finish();
-                            } catch (JSONException e) {
-                                Log.e(TAG, "Error parsing the jsonObject=", e);
-                            }
                         }
 
                         @Override

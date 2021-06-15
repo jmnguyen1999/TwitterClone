@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -36,10 +37,15 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
     ItemTweetBinding binding;
     List<Tweet> tweets;
     Context context;
+    private TweetAdapterListener listener;
 
-    public TweetAdapter(Context context, List<Tweet> tweets){
+    public interface TweetAdapterListener{
+        void onClick(Tweet tweetClicked);
+    }
+    public TweetAdapter(Context context, List<Tweet> tweets, TweetAdapterListener listener){
         this.tweets = tweets;
         this.context = context;
+        this.listener = listener;
     }
 
     @NonNull
@@ -72,7 +78,7 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
-
+        RelativeLayout rlTweetContainer;
         ImageView ivProfilePic;
         TextView tvName;
         TextView tvTimeCreated;
@@ -92,6 +98,7 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
          //   embeddedImageContainer = binding.embeddedImagesContainer;
             ivEmbeddedImage = binding.ivEmbeddedImage;
             ivComment = binding.icCommentIcon;
+            rlTweetContainer = binding.rlTweetContainer;
         }
 
         public void bind(Tweet tweet, int position){
@@ -131,6 +138,13 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
 
                     //2. Start the intent and expect to get the result in TimelineActivty under the request code (arbitrary) "REPLY_REQUEST_CODE":
                     ((Activity) context).startActivityForResult(toComposeActivity, TimelineActivity.REPLY_REQUEST_CODE);
+                }
+            });
+
+            rlTweetContainer.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    listener.onClick(tweet);
                 }
             });
         }
