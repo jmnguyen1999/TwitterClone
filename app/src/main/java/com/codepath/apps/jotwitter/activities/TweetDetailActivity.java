@@ -14,10 +14,9 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
-import com.codepath.apps.jotwitter.ComposeDialog;
-import com.codepath.apps.jotwitter.R;
+import com.codepath.apps.jotwitter.fragments.ComposeDialog;
 import com.codepath.apps.jotwitter.TwitterApp;
-import com.codepath.apps.jotwitter.TwitterClient;
+import com.codepath.apps.jotwitter.network.TwitterClient;
 import com.codepath.apps.jotwitter.adapters.TweetAdapter;
 import com.codepath.apps.jotwitter.databinding.ActivityTweetDetailBinding;
 import com.codepath.apps.jotwitter.models.Tweet;

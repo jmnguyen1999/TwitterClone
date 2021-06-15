@@ -1,4 +1,4 @@
-package com.codepath.apps.jotwitter;
+package com.codepath.apps.jotwitter.fragments;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -21,8 +21,11 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
+import com.codepath.apps.jotwitter.R;
+import com.codepath.apps.jotwitter.TwitterApp;
 import com.codepath.apps.jotwitter.databinding.FragmentComposeBinding;
 import com.codepath.apps.jotwitter.models.Tweet;
+import com.codepath.apps.jotwitter.network.TwitterClient;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 
 import org.jetbrains.annotations.NotNull;

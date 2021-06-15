@@ -1,39 +1,22 @@
 package com.codepath.apps.jotwitter.activities;
 
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 
 import com.codepath.apps.jotwitter.R;
-import com.codepath.apps.jotwitter.TwitterApp;
-import com.codepath.apps.jotwitter.TwitterClient;
-import com.codepath.apps.jotwitter.models.SampleModel;
-import com.codepath.apps.jotwitter.models.SampleModelDao;
+import com.codepath.apps.jotwitter.network.TwitterClient;
 import com.codepath.oauth.OAuthLoginActionBarActivity;
 
 public class LoginActivity extends OAuthLoginActionBarActivity<TwitterClient> {
 	private static final String TAG = "LoginActivity";
-	SampleModelDao sampleModelDao;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
-
-		final SampleModel sampleModel = new SampleModel();
-		sampleModel.setName("CodePath");
-
-		sampleModelDao = ((TwitterApp) getApplicationContext()).getMyDatabase().sampleModelDao();
-
-		AsyncTask.execute(new Runnable() {
-			@Override
-			public void run() {
-				sampleModelDao.insertModel(sampleModel);
-			}
-		});
 	}
 
 

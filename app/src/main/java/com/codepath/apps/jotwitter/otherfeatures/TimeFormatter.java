@@ -1,4 +1,4 @@
-package com.codepath.apps.jotwitter;
+package com.codepath.apps.jotwitter.otherfeatures;
 
 import android.text.format.DateUtils;
 import android.util.Log;

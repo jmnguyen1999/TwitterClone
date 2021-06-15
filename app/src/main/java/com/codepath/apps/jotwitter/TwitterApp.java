@@ -5,6 +5,8 @@ import android.content.Context;
 
 import androidx.room.Room;
 
+import com.codepath.apps.jotwitter.database.MyDatabase;
+import com.codepath.apps.jotwitter.network.TwitterClient;
 import com.facebook.stetho.Stetho;
 
 /*

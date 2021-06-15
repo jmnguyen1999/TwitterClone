@@ -10,9 +10,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
-import com.codepath.apps.jotwitter.R;
 import com.codepath.apps.jotwitter.TwitterApp;
-import com.codepath.apps.jotwitter.TwitterClient;
+import com.codepath.apps.jotwitter.network.TwitterClient;
 import com.codepath.apps.jotwitter.adapters.FollowerAdapter;
 import com.codepath.apps.jotwitter.databinding.ActivityFollowerBinding;
 import com.codepath.apps.jotwitter.models.User;

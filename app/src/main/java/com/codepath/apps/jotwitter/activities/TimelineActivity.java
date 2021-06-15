@@ -1,6 +1,5 @@
 package com.codepath.apps.jotwitter.activities;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -8,22 +7,24 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
-import com.codepath.apps.jotwitter.ComposeDialog;
-import com.codepath.apps.jotwitter.EndlessRecyclerViewScrollListener;
+import com.codepath.apps.jotwitter.fragments.ComposeDialog;
+import com.codepath.apps.jotwitter.otherfeatures.EndlessRecyclerViewScrollListener;
 import com.codepath.apps.jotwitter.R;
-import com.codepath.apps.jotwitter.adapters.FollowerAdapter;
 import com.codepath.apps.jotwitter.adapters.TweetAdapter;
 import com.codepath.apps.jotwitter.TwitterApp;
-import com.codepath.apps.jotwitter.TwitterClient;
+import com.codepath.apps.jotwitter.network.TwitterClient;
 import com.codepath.apps.jotwitter.databinding.ActivityTimelineBinding;
 import com.codepath.apps.jotwitter.models.Tweet;
+import com.codepath.apps.jotwitter.models.TweetWithUser;
+import com.codepath.apps.jotwitter.models.TwitterDao;
+import com.codepath.apps.jotwitter.models.User;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import androidx.appcompat.widget.Toolbar;
@@ -48,6 +49,8 @@ public class TimelineActivity extends AppCompatActivity implements ComposeDialog
 
     ActivityTimelineBinding binding;
     TwitterClient client;
+    TwitterDao tweetDao;
+
     List<Tweet> tweets;
 
     //All Views:
@@ -70,6 +73,7 @@ public class TimelineActivity extends AppCompatActivity implements ComposeDialog
 
         tweets = new ArrayList<>();
         client = TwitterApp.getRestClient(this);
+        tweetDao = ((TwitterApp) getApplicationContext()).getMyDatabase().tweetDao();
         fabCompose = binding.fabCompose;
         swipeContainer = binding.swipeContainer;
         progressBar = binding.progressBar;
@@ -79,6 +83,7 @@ public class TimelineActivity extends AppCompatActivity implements ComposeDialog
         //getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);        //remove the title
 
+        progressBar.setVisibility(View.VISIBLE);
         /* This would require us to use Fragments! So let's not implement it for the sake of following the assignment!
         bottomNavBar = binding.bottomNavigation;
 
@@ -147,8 +152,19 @@ public class TimelineActivity extends AppCompatActivity implements ComposeDialog
         // Adds the scroll listener to RecyclerView
         rvTweets.addOnScrollListener(scrollListener);
 
+        //Query for existing Tweets in the DB:
+        AsyncTask.execute(new Runnable() {
+            @Override
+            public void run() {
+                Log.d(TAG, "showing data from database");
+                List<TweetWithUser> tweetWithUsers = tweetDao.recentItems();
+                List<Tweet> tweetsFromDB = TweetWithUser.getTweetList(tweetWithUsers);
+                tweetAdapter.addAll(tweetsFromDB);
+                progressBar.setVisibility(View.INVISIBLE);
+            }
+        });
+
         populateHomeTimeline();
-        progressBar.setVisibility(View.VISIBLE);
     }
 
     private void populateHomeTimeline() {
@@ -161,9 +177,24 @@ public class TimelineActivity extends AppCompatActivity implements ComposeDialog
                 JSONArray jsonResponse = json.jsonArray;
                 try {
                     tweetAdapter.clear();
-                    tweetAdapter.addAll(Tweet.fromJsonArray(jsonResponse));
+                    List<Tweet> tweetsFromNetwork = Tweet.fromJsonArray(jsonResponse);
+                    tweetAdapter.addAll(tweetsFromNetwork);
                     swipeContainer.setRefreshing(false);
                     progressBar.setVisibility(View.INVISIBLE);
+
+                    //Query for existing Tweets in the DB:
+                    AsyncTask.execute(new Runnable() {
+                        @Override
+                        public void run() {
+                            Log.d(TAG, "saving data into database");
+                            //Insert users first (b/c Tweets require a userId):
+                            List<User> usersFromNetwork = User.fromTweetList(tweetsFromNetwork);
+                            tweetDao.insertMode(usersFromNetwork.toArray(new User[0]));
+                            //Insert tweets after
+                            tweetDao.insertModel(tweetsFromNetwork.toArray(new Tweet[0]));      //this new array DOES automatically size itself!
+                        }
+                    });
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -175,35 +206,6 @@ public class TimelineActivity extends AppCompatActivity implements ComposeDialog
             }
         });
     }
-
-    /*
-    @Override
-    //Purpose:          To handle the results coming from ComposeActivity! Can come from an intent to Compose or to Reply! Check it using the request codes we labeled them with when we sent them!
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable @org.jetbrains.annotations.Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        Log.d(TAG, "onActivityReslt():      requestCode = " + requestCode + "    resultCode = " + resultCode);
-        // Did this result come from Composing a new post?
-        if(requestCode == COMPOSE_REQUEST_CODE && resultCode == RESULT_OK){
-            Log.d(TAG, "compose activity was a success!");
-            Tweet newTweet = data.getParcelableExtra(KEY_COMPOSE_TWEET);
-            tweets.add(newTweet);
-            tweetAdapter.notifyItemInserted(0);
-            rvTweets.smoothScrollToPosition(0);             //scroll up to see the new tweet
-        }
-
-        //Did this result come from Replying to another user's post?:
-        else if(requestCode == REPLY_REQUEST_CODE && resultCode == RESULT_OK) {
-            Log.d(TAG, "compose activity for reply was a success!");
-            Tweet newTweet = Parcels.unwrap(data.getParcelableExtra(KEY_COMPOSE_TWEET));
-            int tweetRepliedTo = data.getIntExtra(ComposeActivity.KEY_TWEET_POSITION, -1);
-            Intent toDetailAct = new Intent(TimelineActivity.this, TweetDetailActivity.class);
-            toDetailAct.putExtra(KEY_DETAIL_ACT, Parcels.wrap(newTweet));
-            startActivity(toDetailAct);
-        }
-        else{
-            Log.e(TAG, "request received did not come from the available options, OR results were NOT ok!");
-        }
-    }*/
 
     private void loadMore(){
         //Make network request via TwitterClient to obtain only the Tweets older than the oldest one we currently have:

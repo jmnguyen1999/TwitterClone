@@ -1,4 +1,4 @@
-package com.codepath.apps.jotwitter;
+package com.codepath.apps.jotwitter.otherfeatures;
 
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;

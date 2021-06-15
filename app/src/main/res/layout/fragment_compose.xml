@@ -7,7 +7,7 @@
     android:layout_height="530dp"
     android:fitsSystemWindows="true"
     android:orientation="vertical"
-    tools:context=".ComposeDialog">
+    tools:context=".fragments.ComposeDialog">
 
     <!-- Load the toolbar here -->
     <include

@@ -1,8 +1,10 @@
-package com.codepath.apps.jotwitter;
+package com.codepath.apps.jotwitter.network;
 
 import android.content.Context;
 import android.util.Log;
 
+import com.codepath.apps.jotwitter.BuildConfig;
+import com.codepath.apps.jotwitter.R;
 import com.codepath.asynchttpclient.RequestParams;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 import com.codepath.oauth.OAuthBaseClient;
