@@ -1,14 +1,11 @@
 package com.codepath.apps.jotwitter.adapters;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -17,20 +14,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
-import com.codepath.apps.jotwitter.R;
-import com.codepath.apps.jotwitter.activities.ComposeActivity;
-import com.codepath.apps.jotwitter.activities.TimelineActivity;
 import com.codepath.apps.jotwitter.databinding.ItemTweetBinding;
 import com.codepath.apps.jotwitter.models.Tweet;
 import com.codepath.apps.jotwitter.models.User;
 
 import org.jetbrains.annotations.NotNull;
-import org.parceler.Parcels;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.xml.transform.Result;
 
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
@@ -94,6 +85,7 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
         TextView tvTimeCreated;
         TextView tvBody;
         ImageView ivEmbeddedImage;
+        TextView tvUsername;
         //ListView embeddedImageContainer;
 
         ImageView ivComment;
@@ -113,6 +105,7 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
             rlTweetContainer = binding.rlTweetContainer;
             ivHeart = binding.ivFavoriteIcon;
             ivShare = binding.ivShareIcon;
+            tvUsername = binding.tvUsername;
         }
 
         public void bind(Tweet tweet, int position){
@@ -129,7 +122,7 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
                 Log.d(TAG, "media urls = " + embeddedImageUrls.toString());
                 Glide.with(context)
                         .load(embeddedImageUrls.get(0))
-                        .transform(new RoundedCornersTransformation(30, 10))
+                        .transform(new RoundedCornersTransformation(40, 10))
                         .into(ivEmbeddedImage);
                 //Set up ListView:
               /*  EmbeddedImageAdapter imageAdapter = new EmbeddedImageAdapter(context, embeddedImageUrls);
@@ -138,6 +131,7 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
 
             tvName.setText(user.getName());
             tvBody.setText(tweet.getBody());
+            tvUsername.setText("@"+user.getUsername());
             tvTimeCreated.setText(tweet.getFormattedTimestamp());
             Glide.with(context)
                     .load(user.getProfileUrl())

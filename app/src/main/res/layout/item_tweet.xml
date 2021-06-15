@@ -32,6 +32,15 @@
             tools:text="fromis_9" />
 
         <TextView
+            android:id="@+id/tvUsername"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_toRightOf="@id/tvOtherName"
+            android:textColor="@color/twitter_light_gray"
+            tools:text="fromis321" />
+
+        <TextView
             android:id="@+id/tvTimeCreated"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -48,11 +57,12 @@
             android:layout_marginTop="5dp"
             android:autoLink="all"
             android:linksClickable="true"
+            android:textColor="@color/twitter_black"
             tools:text="dlfsdjflksjadflksjadlkfjsalkdfjajksdflkajsdflasjdfklajsdkfljasldfjalskjfdksdjfaksjfksjf" />
 
         <ImageView
             android:id="@+id/ivEmbeddedImage"
-            android:layout_width="match_parent"
+            android:layout_width="380dp"
             android:layout_height="150dp"
             android:layout_below="@+id/tvBody"
             android:layout_marginTop="10dp"
@@ -66,7 +76,7 @@
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_below="@id/ivEmbeddedImage"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="10dp"
             app:srcCompat="@drawable/comment_icon" />
 
         <ImageView
@@ -75,7 +85,7 @@
             android:layout_height="20dp"
             android:layout_below="@+id/ivEmbeddedImage"
             android:layout_marginStart="60dp"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="10dp"
             android:layout_toEndOf="@+id/icCommentIcon"
             app:srcCompat="@drawable/ic_vector_retweet_stroke" />
 
@@ -85,7 +95,7 @@
             android:layout_height="20dp"
             android:layout_below="@+id/ivEmbeddedImage"
             android:layout_marginStart="60dp"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="10dp"
             android:layout_toEndOf="@+id/ivRetweetIcon"
             app:srcCompat="@drawable/ic_vector_heart_stroke" />
 
@@ -95,7 +105,7 @@
             android:layout_height="20dp"
             android:layout_below="@+id/ivEmbeddedImage"
             android:layout_marginStart="60dp"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="10dp"
             android:layout_toEndOf="@+id/ivFavoriteIcon"
             app:srcCompat="@drawable/share_icon" />
 

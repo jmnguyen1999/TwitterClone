@@ -122,9 +122,9 @@ public class TimelineActivity extends AppCompatActivity implements ComposeDialog
         fabCompose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(TimelineActivity.this, ComposeActivity.class);
-                i.putExtra(ComposeActivity.KEY_PURPOSE, ComposeActivity.COMPOSE_FUNCTION);
-                startActivityForResult(i, COMPOSE_REQUEST_CODE);
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                ComposeDialog composeDialog = ComposeDialog.newInstance(ComposeDialog.COMPOSE_FUNCTION, null);
+                composeDialog.show(fragmentManager, "dialog_compose");
             }
         });
 
@@ -176,6 +176,7 @@ public class TimelineActivity extends AppCompatActivity implements ComposeDialog
         });
     }
 
+    /*
     @Override
     //Purpose:          To handle the results coming from ComposeActivity! Can come from an intent to Compose or to Reply! Check it using the request codes we labeled them with when we sent them!
     protected void onActivityResult(int requestCode, int resultCode, @Nullable @org.jetbrains.annotations.Nullable Intent data) {
@@ -202,7 +203,7 @@ public class TimelineActivity extends AppCompatActivity implements ComposeDialog
         else{
             Log.e(TAG, "request received did not come from the available options, OR results were NOT ok!");
         }
-    }
+    }*/
 
     private void loadMore(){
         //Make network request via TwitterClient to obtain only the Tweets older than the oldest one we currently have:

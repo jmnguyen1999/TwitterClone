@@ -34,7 +34,7 @@
     </style>
 
     <style name="invalidCount">
-        <item name="android:textColor">@color/twitter_black</item>
+        <item name="android:textColor">@color/red</item>
     </style>
 
     <style name="ToolbarTheme" parent="Theme.AppCompat.Light.DarkActionBar">

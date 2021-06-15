@@ -20,6 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.codepath.apps.jotwitter.databinding.FragmentComposeBinding;
 import com.codepath.apps.jotwitter.models.Tweet;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
@@ -79,7 +80,10 @@ public class ComposeDialog extends DialogFragment {
         ComposeDialog fragment = new ComposeDialog();
         Bundle args = new Bundle();
         args.putString(KEY_PURPOSE, purpose);
-        args.putParcelable(KEY_TWEET_REPLY_FOR, Parcels.wrap(tweetReplyTo));
+        if(purpose.equals(REPLY_FUNCTION)) {
+            Log.d(TAG, "for replying: tweetReplyTo = null: " + (tweetReplyTo == null));
+            args.putParcelable(KEY_TWEET_REPLY_FOR, Parcels.wrap(tweetReplyTo));
+        }
         fragment.setArguments(args);
         return fragment;
     }
@@ -245,7 +249,11 @@ public class ComposeDialog extends DialogFragment {
                     //user = User.fromJson(jsonResponse);
                     //Log.d(TAG, "Name = " + jsonResponse.getString("name"));
                     Log.d(TAG, "profile url = " + jsonResponse.getString("profile_image_url_https"));
-                    Glide.with(getContext()).load(jsonResponse.getString("profile_image_url_https")).into(ivUserProfile);
+                    Glide.with(getContext())
+                            .load(jsonResponse.getString("profile_image_url_https"))
+                            .centerCrop() // scale image to fill the entire ImageView
+                            .transform(new CircleCrop())
+                            .into(ivUserProfile);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

@@ -15,7 +15,6 @@
         android:theme="@style/AppTheme">
         <activity android:name=".activities.FollowerActivity"></activity>
         <activity android:name=".activities.TweetDetailActivity" />
-        <activity android:name=".activities.ComposeActivity" />
         <activity android:name=".activities.TimelineActivity" />
         <activity
             android:name=".activities.LoginActivity"

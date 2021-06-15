@@ -53,6 +53,7 @@ public class TweetDetailActivity extends AppCompatActivity implements ComposeDia
     TextView tvTimeCreated;
     TextView tvBody;
     ImageView ivEmbeddedImage;
+    TextView tvUsername;
     //ListView embeddedImageContainer;
     //ImageView ivComment;
 
@@ -74,6 +75,7 @@ public class TweetDetailActivity extends AppCompatActivity implements ComposeDia
         ivProfilePic = binding.ivOtherProfile;
         tvName = binding.tvOtherName;
         tvBody = binding.tvBody;
+        tvUsername = binding.tvUsername;
         //   embeddedImageContainer = binding.embeddedImagesContainer;
         ivEmbeddedImage = binding.ivEmbeddedImage;
         //ivComment = binding.icCommentIcon;
@@ -129,7 +131,7 @@ public class TweetDetailActivity extends AppCompatActivity implements ComposeDia
             Log.d(TAG, "media urls = " + embeddedImageUrls.toString());
             Glide.with(this)
                     .load(embeddedImageUrls.get(0))
-                    .transform(new RoundedCornersTransformation(30, 10))
+                    .transform(new RoundedCornersTransformation(40, 10))
                     .into(ivEmbeddedImage);
             //Set up ListView:
               /*  EmbeddedImageAdapter imageAdapter = new EmbeddedImageAdapter(context, embeddedImageUrls);
@@ -138,6 +140,7 @@ public class TweetDetailActivity extends AppCompatActivity implements ComposeDia
 
         tvName.setText(user.getName());
         tvBody.setText(tweet.getBody());
+        tvUsername.setText("@"+user.getUsername());
         Glide.with(this)
                 .load(user.getProfileUrl())
                 .centerCrop() // scale image to fill the entire ImageView
