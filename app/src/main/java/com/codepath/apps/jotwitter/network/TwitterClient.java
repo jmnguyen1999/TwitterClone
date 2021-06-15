@@ -108,25 +108,32 @@ public class TwitterClient extends OAuthBaseClient {
 	public void getFollowers(String userId, JsonHttpResponseHandler handler){
 		String apiUrl = getApiUrl("followers/list.json");
 		RequestParams params = new RequestParams();
-		params.put("user_id", userId);				//used to get the older tweets after id #
+		params.put("user_id", userId);
 		client.get(apiUrl, params, handler);
 	}
 
 	public void getFollowing(String userId, JsonHttpResponseHandler handler){
 		String apiUrl = getApiUrl("friends/list.json");
 		RequestParams params = new RequestParams();
-		params.put("user_id", userId);				//used to get the older tweets after id #
+		params.put("user_id", userId);
 		client.get(apiUrl, params, handler);
 	}
 
 	public void getRepliesToUser(String username, JsonHttpResponseHandler handler){
-		//https://api.twitter.com/1.1/search/tweets.json?q=to:thenoodlelifee
-		Log.d("client", "username = " + username);
 		String apiUrl = getApiUrl("search/tweets.json");
 		String query = "to:"+username;
-		Log.d("jo", "url = " + REST_URL+ "/search/tweets.json?q="+query);
 		RequestParams params = new RequestParams();
-		params.put("q", query);				//used to get the older tweets after id #
+		params.put("q", query);
 		client.get(apiUrl, params, handler);
+	}
+
+	public void retweet(long tweetId, JsonHttpResponseHandler handler){
+		String apiUrl = getApiUrl("statuses/retweet/" + tweetId + ".json");
+		client.post(apiUrl, handler);
+	}
+
+	public void unretweet(long tweetId, JsonHttpResponseHandler handler){
+		String apiUrl = getApiUrl("statuses/unretweet/" + tweetId + ".json");
+		client.post(apiUrl, handler);
 	}
 }

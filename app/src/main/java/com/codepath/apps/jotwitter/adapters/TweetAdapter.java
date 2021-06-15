@@ -38,7 +38,7 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
         void onCommentClick(Tweet tweetClicked);
         void onHeartClick(Tweet tweetClicked, ImageView heartIcon);
         void onProfilePicClicked(Tweet tweetClicked);
-        void onSharedButtonClicked(Tweet tweetClicked);
+        void onRetweetClicked(Tweet tweetClicked, ImageView retweetIcon);
     }
     public TweetAdapter(Context context, List<Tweet> tweets, TweetAdapterListener listener){
         this.tweets = tweets;
@@ -90,7 +90,7 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
 
         ImageView ivComment;
         ImageView ivHeart;
-        ImageView ivShare;
+        ImageView ivRetweet;
 
         public ViewHolder(@NonNull @NotNull View itemView) {
             super(itemView);
@@ -104,7 +104,7 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
             ivComment = binding.icCommentIcon;
             rlTweetContainer = binding.rlTweetContainer;
             ivHeart = binding.ivFavoriteIcon;
-            ivShare = binding.ivShareIcon;
+            ivRetweet = binding.ivRetweetIcon;
             tvUsername = binding.tvUsername;
         }
 
@@ -167,10 +167,10 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
                     listener.onProfilePicClicked(tweet);
                 }
             });
-            ivShare.setOnClickListener(new View.OnClickListener() {
+            ivRetweet.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    listener.onSharedButtonClicked(tweet);
+                    listener.onRetweetClicked(tweet, ivRetweet);
                 }
             });
         }

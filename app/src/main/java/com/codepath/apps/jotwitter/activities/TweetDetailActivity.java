@@ -104,7 +104,7 @@ public class TweetDetailActivity extends AppCompatActivity implements ComposeDia
             }
 
             @Override
-            public void onSharedButtonClicked(Tweet tweetClicked) {
+            public void onRetweetClicked(Tweet tweetClicked, ImageView retweetIcon) {
 
             }
         };

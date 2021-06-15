@@ -7,12 +7,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.content.Intent;
+import android.graphics.drawable.Icon;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.codepath.apps.jotwitter.fragments.ComposeDialog;
 import com.codepath.apps.jotwitter.otherfeatures.EndlessRecyclerViewScrollListener;
@@ -234,7 +236,7 @@ public class TimelineActivity extends AppCompatActivity implements ComposeDialog
     @Override
     //Purpose:      update the adapter to show this new tweet on the timeline!
     public void composeFinished(Tweet newTweet) {
-        Log.d(TAG, "compose activity was a success!");
+        Log.d(TAG, "compose dialog for compose was a success!");
         tweets.add(newTweet);
         tweetAdapter.notifyItemInserted(0);
         rvTweets.smoothScrollToPosition(0);             //scroll up to see the new tweet
@@ -243,7 +245,7 @@ public class TimelineActivity extends AppCompatActivity implements ComposeDialog
     @Override
     //Purpose:      Go to detail view to show all replies from this tweet
     public void replyFinished(Tweet tweetRepliedTo) {
-        Log.d(TAG, "compose activity for reply was a success!");
+        Log.d(TAG, "compose dialog for reply was a success!");
         Intent toDetailAct = new Intent(TimelineActivity.this, TweetDetailActivity.class);
         toDetailAct.putExtra(KEY_DETAIL_ACT, Parcels.wrap(tweetRepliedTo));
         startActivity(toDetailAct);
@@ -292,12 +294,11 @@ public class TimelineActivity extends AppCompatActivity implements ComposeDialog
                         public void onSuccess(int statusCode, Headers headers, JSON json) {
                             heartIcon.setImageDrawable(getDrawable(R.drawable.ic_vector_heart_stroke));
                             heartIcon.setSelected(false);
-
                         }
 
                         @Override
                         public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
-
+                            Log.e(TAG, "failed to unfavorite tweet = " + response, throwable);
                         }
                     });
                 }
@@ -312,10 +313,44 @@ public class TimelineActivity extends AppCompatActivity implements ComposeDialog
             }
 
             @Override
-            public void onSharedButtonClicked(Tweet tweetClicked) {
+            public void onRetweetClicked(Tweet tweetClicked, ImageView retweetIcon) {
+                //If it's not yet selected --> select it:
+                if(!retweetIcon.isSelected()) {
+                    Log.d(TAG, "retweetIcon is selected = false");
+                    retweetIcon.setImageDrawable(getDrawable(R.drawable.ic_vector_retweet));
+                    retweetIcon.setSelected(true);
+                    client.retweet(tweetClicked.getLongId(), new JsonHttpResponseHandler() {
+                        @Override
+                        public void onSuccess(int statusCode, Headers headers, JSON json) {
+                            Toast.makeText(TimelineActivity.this, "successfully retweeted!", Toast.LENGTH_SHORT).show();
+                        }
 
+                        @Override
+                        public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
+                            Toast.makeText(TimelineActivity.this, "failed to retweet :(", Toast.LENGTH_SHORT).show();
+                            Log.e(TAG, "failed to retweet = " + response, throwable);
+                        }
+                    });
+                }
+                //Otherwise --> is selected --> unselect it
+                else{
+                    Log.d(TAG, "retweetIcon is selected = true");
+                    retweetIcon.setImageDrawable(getDrawable(R.drawable.ic_vector_retweet_stroke));
+                    retweetIcon.setSelected(false);
+
+                    client.unretweet(tweetClicked.getLongId(), new JsonHttpResponseHandler() {
+                        @Override
+                        public void onSuccess(int statusCode, Headers headers, JSON json) {
+                            Log.d(TAG, "successfully unretweeted");
+                        }
+
+                        @Override
+                        public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
+                            Log.d(TAG, "failed to unretweet: " + response, throwable);
+                        }
+                    });
+                }
             }
-
         };
         return listener;
     }
