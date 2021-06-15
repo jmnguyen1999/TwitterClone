@@ -1,6 +1,7 @@
 package com.codepath.apps.jotwitter.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -12,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.codepath.apps.jotwitter.ComposeDialog;
 import com.codepath.apps.jotwitter.R;
 import com.codepath.apps.jotwitter.adapters.TweetAdapter;
 import com.codepath.apps.jotwitter.databinding.ActivityTweetDetailBinding;
@@ -24,7 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 //Purpose:      Displays details of a given Tweet object!
-public class TweetDetailActivity extends AppCompatActivity {
+public class TweetDetailActivity extends AppCompatActivity implements ComposeDialog.Listener{
     private static final String TAG = "TweetDetailActivity";
     private static final String KEY_DETAIL_ACT = "tweetForDetailActivity";
 
@@ -71,7 +73,14 @@ public class TweetDetailActivity extends AppCompatActivity {
         //Set up RecyclerView:
         TweetAdapter.TweetAdapterListener listener = new TweetAdapter.TweetAdapterListener() {
             @Override
-            public void onClick(Tweet tweetClicked) {}
+            public void onTweetClick(Tweet tweetClicked) {}
+
+            @Override
+            public void onCommentClick(Tweet tweetClicked) {
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                ComposeDialog composeDialog = ComposeDialog.newInstance(ComposeDialog.REPLY_FUNCTION, tweetClicked);
+                composeDialog.show(fragmentManager, "dialog_compose");
+            }
         };
 
         replyAdapter = new TweetAdapter(TweetDetailActivity.this, replies, listener);
@@ -110,5 +119,17 @@ public class TweetDetailActivity extends AppCompatActivity {
     //Purpose:      Get all the replies to the given tweet id.
     public void getAllReplies(String tweetId){
         Log.d(TAG, "getAllReplies");
+    }
+
+    @Override
+    public void composeFinished(Tweet newTweet) { }
+
+    @Override
+    public void replyFinished(Tweet tweetRepliedTo) {
+        Log.d(TAG, "compose activity for reply was a success!");
+        Intent toDetailAct = new Intent(TweetDetailActivity.this, TweetDetailActivity.class);
+        toDetailAct.putExtra(KEY_DETAIL_ACT, Parcels.wrap(tweetRepliedTo));
+        startActivity(toDetailAct);
+        finish();
     }
 }

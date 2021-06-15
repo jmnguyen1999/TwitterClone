@@ -32,7 +32,6 @@ public class Tweet {
         tweet.longId = jsonTweet.getLong("id");
 
         JSONObject entities = jsonTweet.getJSONObject("entities");
-
         if(entities.has("media")){
             JSONArray media = entities.getJSONArray("media");
             tweet.hasMedia = true;

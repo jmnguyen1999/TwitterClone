@@ -4,4 +4,6 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="embedded_image_height">150dp</dimen>
+    <dimen name="compose_dialog_width">375dp</dimen>
+    <dimen name="compose_dialog_height">570dp</dimen>
 </resources>

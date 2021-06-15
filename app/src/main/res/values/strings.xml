@@ -7,4 +7,6 @@
     <string name="intent_host">cprest</string>
     <string name="tweet">Tweet</string>
     <string name="sample_reply_user">fromis_9</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

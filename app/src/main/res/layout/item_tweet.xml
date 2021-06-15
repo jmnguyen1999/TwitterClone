@@ -46,6 +46,8 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/tvOtherName"
             android:layout_marginTop="5dp"
+            android:autoLink="all"
+            android:linksClickable="true"
             tools:text="dlfsdjflksjadflksjadlkfjsalkdfjajksdflkajsdflasjdfklajsdkfljasldfjalskjfdksdjfaksjfksjf" />
 
         <ImageView

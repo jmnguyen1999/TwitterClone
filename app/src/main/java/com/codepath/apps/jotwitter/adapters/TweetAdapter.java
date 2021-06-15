@@ -40,7 +40,8 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
     private TweetAdapterListener listener;
 
     public interface TweetAdapterListener{
-        void onClick(Tweet tweetClicked);
+        void onTweetClick(Tweet tweetClicked);
+        void onCommentClick(Tweet tweetClicked);
     }
     public TweetAdapter(Context context, List<Tweet> tweets, TweetAdapterListener listener){
         this.tweets = tweets;
@@ -130,21 +131,14 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
             ivComment.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent toComposeActivity = new Intent(context, ComposeActivity.class);
-                    //1. Tell ComposeActivity that we want you to set up for REPLYING and not Composing, also, here's the username we're replying to:
-                    toComposeActivity.putExtra(ComposeActivity.KEY_PURPOSE, ComposeActivity.REPLY_FUNCTION);
-                    toComposeActivity.putExtra(ComposeActivity.KEY_REPLY_TO, Parcels.wrap(tweet));
-                    toComposeActivity.putExtra(ComposeActivity.KEY_TWEET_POSITION, position);               //heres the placement of the Tweet in the recyclerview btw
-
-                    //2. Start the intent and expect to get the result in TimelineActivty under the request code (arbitrary) "REPLY_REQUEST_CODE":
-                    ((Activity) context).startActivityForResult(toComposeActivity, TimelineActivity.REPLY_REQUEST_CODE);
+                   listener.onCommentClick(tweet);
                 }
             });
 
             rlTweetContainer.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    listener.onClick(tweet);
+                    listener.onTweetClick(tweet);
                 }
             });
         }
