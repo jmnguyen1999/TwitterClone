@@ -11,7 +11,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.codepath.apps.jotwitter.ComposeDialog;
 import com.codepath.apps.jotwitter.EndlessRecyclerViewScrollListener;
@@ -127,23 +129,7 @@ public class TimelineActivity extends AppCompatActivity implements ComposeDialog
 
         //Set up recycler view:
         rvTweets = binding.rvTweets;
-        TweetAdapter.TweetAdapterListener listener = new TweetAdapter.TweetAdapterListener() {          //Go to TweetDetailActivity!
-            @Override
-            public void onTweetClick(Tweet tweetClicked) {
-                Intent toDetailView = new Intent(TimelineActivity.this, TweetDetailActivity.class);
-                toDetailView.putExtra(KEY_DETAIL_ACT, Parcels.wrap(tweetClicked));
-                startActivity(toDetailView);
-            }
-
-            @Override
-            //Purpose:      --> need to reply! Create ComposeFragment!
-            public void onCommentClick(Tweet tweetClicked) {
-                FragmentManager fragmentManager = getSupportFragmentManager();
-                ComposeDialog composeDialog = ComposeDialog.newInstance(ComposeDialog.REPLY_FUNCTION, tweetClicked);
-                composeDialog.show(fragmentManager, "dialog_compose");
-            }
-
-        };
+        TweetAdapter.TweetAdapterListener listener = initalizeAdapterListener();
         tweetAdapter = new TweetAdapter(this, tweets, listener);
         rvTweets.setAdapter(tweetAdapter);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
@@ -257,5 +243,73 @@ public class TimelineActivity extends AppCompatActivity implements ComposeDialog
         Intent toDetailAct = new Intent(TimelineActivity.this, TweetDetailActivity.class);
         toDetailAct.putExtra(KEY_DETAIL_ACT, Parcels.wrap(tweetRepliedTo));
         startActivity(toDetailAct);
+    }
+
+    public TweetAdapter.TweetAdapterListener initalizeAdapterListener(){
+        TweetAdapter.TweetAdapterListener listener = new TweetAdapter.TweetAdapterListener() {          //Go to TweetDetailActivity!
+            @Override
+            public void onTweetClick(Tweet tweetClicked) {
+                Intent toDetailView = new Intent(TimelineActivity.this, TweetDetailActivity.class);
+                toDetailView.putExtra(KEY_DETAIL_ACT, Parcels.wrap(tweetClicked));
+                startActivity(toDetailView);
+            }
+
+            @Override
+            //Purpose:      --> need to reply! Create ComposeFragment!
+            public void onCommentClick(Tweet tweetClicked) {
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                ComposeDialog composeDialog = ComposeDialog.newInstance(ComposeDialog.REPLY_FUNCTION, tweetClicked);
+                composeDialog.show(fragmentManager, "dialog_compose");
+            }
+
+            @Override
+            //Purpose:   --> favorite this tweet!
+            public void onHeartClick(Tweet tweetClicked, ImageView heartIcon) {
+                if(!heartIcon.isSelected()) {
+                    Log.d(TAG, "heartIcon is selected = false");
+                    client.favoriteThisTweet(tweetClicked.getLongId(), new JsonHttpResponseHandler() {
+                        @Override
+                        public void onSuccess(int statusCode, Headers headers, JSON json) {
+                            Log.d(TAG, "success in liking the tweet!");
+                            heartIcon.setImageDrawable(getDrawable(R.drawable.ic_vector_heart));
+                            heartIcon.setSelected(true);
+                        }
+
+                        @Override
+                        public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
+                            Log.d(TAG, "error liking the tweet =", throwable);
+                        }
+                    });
+                }
+                else{
+                    Log.d(TAG, "heartIcon is selected = true");
+                    client.unfavoriteThisTweet(tweetClicked.getLongId(), new JsonHttpResponseHandler() {
+                        @Override
+                        public void onSuccess(int statusCode, Headers headers, JSON json) {
+                            heartIcon.setImageDrawable(getDrawable(R.drawable.ic_vector_heart_stroke));
+                            heartIcon.setSelected(false);
+
+                        }
+
+                        @Override
+                        public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
+
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onProfilePicClicked(Tweet tweetClicked) {
+
+            }
+
+            @Override
+            public void onSharedButtonClicked(Tweet tweetClicked) {
+
+            }
+
+        };
+        return listener;
     }
 }

@@ -81,6 +81,21 @@ public class TweetDetailActivity extends AppCompatActivity implements ComposeDia
                 ComposeDialog composeDialog = ComposeDialog.newInstance(ComposeDialog.REPLY_FUNCTION, tweetClicked);
                 composeDialog.show(fragmentManager, "dialog_compose");
             }
+
+            @Override
+            public void onHeartClick(Tweet tweetClicked, ImageView heartIcon) {
+
+            }
+
+            @Override
+            public void onProfilePicClicked(Tweet tweetClicked) {
+
+            }
+
+            @Override
+            public void onSharedButtonClicked(Tweet tweetClicked) {
+
+            }
         };
 
         replyAdapter = new TweetAdapter(TweetDetailActivity.this, replies, listener);

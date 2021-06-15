@@ -42,6 +42,9 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
     public interface TweetAdapterListener{
         void onTweetClick(Tweet tweetClicked);
         void onCommentClick(Tweet tweetClicked);
+        void onHeartClick(Tweet tweetClicked, ImageView heartIcon);
+        void onProfilePicClicked(Tweet tweetClicked);
+        void onSharedButtonClicked(Tweet tweetClicked);
     }
     public TweetAdapter(Context context, List<Tweet> tweets, TweetAdapterListener listener){
         this.tweets = tweets;
@@ -88,6 +91,8 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
         //ListView embeddedImageContainer;
 
         ImageView ivComment;
+        ImageView ivHeart;
+        ImageView ivShare;
 
         public ViewHolder(@NonNull @NotNull View itemView) {
             super(itemView);
@@ -100,6 +105,8 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
             ivEmbeddedImage = binding.ivEmbeddedImage;
             ivComment = binding.icCommentIcon;
             rlTweetContainer = binding.rlTweetContainer;
+            ivHeart = binding.ivFavoriteIcon;
+            ivShare = binding.ivShareIcon;
         }
 
         public void bind(Tweet tweet, int position){
@@ -139,6 +146,25 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
                 @Override
                 public void onClick(View v) {
                     listener.onTweetClick(tweet);
+                }
+            });
+
+            ivHeart.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    listener.onHeartClick(tweet, ivHeart);
+                }
+            });
+            ivProfilePic.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    listener.onProfilePicClicked(tweet);
+                }
+            });
+            ivShare.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    listener.onSharedButtonClicked(tweet);
                 }
             });
         }

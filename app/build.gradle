@@ -11,6 +11,7 @@ android {
         applicationId "com.codepath.apps.restclienttemplate"
         minSdkVersion 21
         targetSdkVersion 30
+        vectorDrawables.useSupportLibrary = true
 
         // Room schemas
         javaCompileOptions {
@@ -82,4 +83,8 @@ dependencies {
 
     //For Toolbar:
     implementation 'androidx.appcompat:appcompat:1.0.0'
+
+    //For Vector drawables:
+    implementation "androidx.vectordrawable:vectordrawable:1.0.0" // VectorDrawableCompat
+    implementation "androidx.vectordrawable:vectordrawable-animated:1.0.0" // AnimatedVectorDrawableCompat
 }
