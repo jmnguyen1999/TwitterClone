@@ -43,10 +43,10 @@ The following **additional** features are implemented:
 ## Video Walkthrough
 
 Here's a walkthrough of implemented user stories:
-bug: reply displaying takes a while to show! Here you see me constantly checking the detail view of a tweet. Will be fixing soon!
-<img src='demo.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+**BUG:** reply displaying takes a while to show! Here you see me constantly checking the detail view of a tweet. Will be fixing soon!
 
-GIF created with [LiceCap](http://www.cockos.com/licecap/).
+![demo](demo.gif)
+<br>GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
 ## Notes
 
