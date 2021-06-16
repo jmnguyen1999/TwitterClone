@@ -1,14 +1,15 @@
+
 <!--
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+    <include
+    layout="@layout/toolbar_main"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
-<include
-layout="@layout/toolbar_main"
-android:layout_width="match_parent"
-android:layout_height="wrap_content"/>  -->
+    android:layout_height="wrap_content"/>  -->
 
 <LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
@@ -68,15 +69,12 @@ android:layout_height="wrap_content"/>  -->
                 app:layout_anchor="@id/main.toolbar"
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Light" /> -->
 
-                <!-- ADD ANY THING THAT GETS SCROLLED ALL THE WAY UP WITH TOOLBAR -->
+
             </com.google.android.material.appbar.CollapsingToolbarLayout>
 
 
-
-            <!--- ADD TAB_LAYOUT HERE-->
-
         </com.google.android.material.appbar.AppBarLayout>
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
         <!--
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -84,12 +82,16 @@ android:layout_height="wrap_content"/>  -->
         app:layout_behavior="@string/appbar_scrolling_view_behavior">-->
 
 
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
+
+    <com.codepath.apps.jotwitter.NestedCoordinatorLayout
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        <!--android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/firstCoordinator"
         android:background="@android:color/background_light"
-        android:fitsSystemWindows="true">
+        android:fitsSystemWindows="true"> -->
 
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/testAppbar"
@@ -148,6 +150,8 @@ android:layout_height="wrap_content"/>  -->
         </androidx.core.widget.NestedScrollView>
 
 
+    </com.codepath.apps.jotwitter.NestedCoordinatorLayout>
+
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -158,6 +162,11 @@ android:layout_height="wrap_content"/>  -->
         app:layout_anchor="@id/firstCoordinator"
         android:src="@drawable/ic_vector_heart_stroke" />
 </LinearLayout>
+
+
+
+
+
 
 <!--
 <androidx.coordinatorlayout.widget.CoordinatorLayout

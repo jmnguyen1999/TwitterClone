@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -44,6 +45,7 @@ public class TweetDetailActivity extends AppCompatActivity implements ComposeDia
     List<Tweet> replies;
     RecyclerView rvReplies;
     TweetAdapter replyAdapter;
+    ProgressBar progressBar;
 
     //Views:
     //For our original tweet replying to:
@@ -75,6 +77,7 @@ public class TweetDetailActivity extends AppCompatActivity implements ComposeDia
         tvName = binding.tvOtherName;
         tvBody = binding.tvBody;
         tvUsername = binding.tvUsername;
+        progressBar = binding.progressBar;
         //   embeddedImageContainer = binding.embeddedImagesContainer;
         ivEmbeddedImage = binding.ivEmbeddedImage;
         //ivComment = binding.icCommentIcon;
@@ -114,7 +117,7 @@ public class TweetDetailActivity extends AppCompatActivity implements ComposeDia
         rvReplies.setLayoutManager(new LinearLayoutManager(this));
 
         String tweetId = originalTweet.getId();
-        Log.d(TAG, "tweetId given = " + tweetId);
+        progressBar.setVisibility(View.VISIBLE);
         getAllReplies(originalTweet.getUser().getUsername(), tweetId);
     }
 
@@ -177,6 +180,7 @@ public class TweetDetailActivity extends AppCompatActivity implements ComposeDia
                     //replies.addAll(Tweet.fromJsonArray(jsonStatuses));
                     replyAdapter.notifyDataSetChanged();
                     Log.d(TAG, "replies = " + replies.toString());
+                    progressBar.setVisibility(View.GONE);
                 } catch (JSONException e){
                     Log.e(TAG, "Error getting statuses array:", e);
                 }
