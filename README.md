@@ -44,7 +44,7 @@ The following **additional** features are implemented:
 
 Here's a walkthrough of implemented user stories:
 **BUG:** reply displaying takes a while to show! Here you see me constantly checking the detail view of a tweet. Will be fixing soon!
-
+Also, only 3 Tweets are saved into the database to blatantly show the difference between online/offline! :)
 ![demo](demo.gif)
 <br>GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
