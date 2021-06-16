@@ -9,8 +9,8 @@
         app:showAsAction="never"
         android:title="Settings" />
 
-    <item android:id="@+id/menu_share"
-        android:icon="@drawable/ic_vector_heart"
-        app:showAsAction="always"
-        android:title="Favorite" />
+    <item
+        android:id="@+id/action_profile"
+        android:orderInCategory="101"
+        android:title="Profile" />
 </menu>

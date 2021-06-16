@@ -12,6 +12,7 @@
     android:layout_height="wrap_content"/>  -->
 
 <LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -19,20 +20,21 @@
 
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
-        android:id="@+id/firstCoordinator"
+        android:id="@+id/parentCoordinator"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@android:color/background_light"
         android:fitsSystemWindows="true">
 
         <com.google.android.material.appbar.AppBarLayout
-            android:id="@+id/main.appbar"
+            android:id="@+id/topAppBar"
             android:layout_width="match_parent"
             android:layout_height="140dp"
+            android:background="@color/white"
             android:fitsSystemWindows="true">
 
             <com.google.android.material.appbar.CollapsingToolbarLayout
-                android:id="@+id/main.collapsing"
+                android:id="@+id/topCollapseToolbar"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@color/twitter_blue"
@@ -44,7 +46,7 @@
 
 
                 <ImageView
-                    android:id="@+id/main.backdrop"
+                    android:id="@+id/ivBackdrop"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:fitsSystemWindows="true"
@@ -53,11 +55,13 @@
                     app:layout_collapseMode="parallax" />
 
                 <androidx.appcompat.widget.Toolbar
-                    android:id="@+id/main.toolbar"
+                    android:id="@+id/topToolbar"
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
+                    android:layout_gravity="bottom"
                     app:layout_collapseMode="pin"
                     app:popupTheme="@color/twitter_blue" />
+
 
                 <!--
             <androidx.appcompat.widget.Toolbar
@@ -72,7 +76,6 @@
 
             </com.google.android.material.appbar.CollapsingToolbarLayout>
 
-
         </com.google.android.material.appbar.AppBarLayout>
 
         <!--
@@ -82,85 +85,244 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior">-->
 
 
-
-    <com.codepath.apps.jotwitter.NestedCoordinatorLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
-        <!--android:layout_width="match_parent"
+        <com.codepath.apps.jotwitter.NestedCoordinatorLayout
+            android:id="@+id/childCoordinator"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+            <!--android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/firstCoordinator"
         android:background="@android:color/background_light"
         android:fitsSystemWindows="true"> -->
 
-        <com.google.android.material.appbar.AppBarLayout
-            android:id="@+id/testAppbar"
-            android:layout_width="match_parent"
-            android:layout_height="240dp"
-            android:fitsSystemWindows="true">
-
-            <com.google.android.material.appbar.CollapsingToolbarLayout
-                android:id="@+id/testCollapsing"
+            <com.google.android.material.appbar.AppBarLayout
+                android:id="@+id/childAppBar"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/twitter_dark_gray"
-                android:fitsSystemWindows="true"
-                app:expandedTitleMarginEnd="64dp"
-                app:expandedTitleMarginStart="48dp"
-                app:layout_scrollFlags="scroll|exitUntilCollapsed">
+                android:layout_height="230dp"
+                android:fitsSystemWindows="true">
 
-                <RelativeLayout
+                <com.google.android.material.appbar.CollapsingToolbarLayout
+                    android:id="@+id/childCollapseToolbar"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:background="@color/red">
+                    android:background="@color/white"
+                    android:fitsSystemWindows="true"
+                    app:expandedTitleMarginEnd="64dp"
+                    app:expandedTitleMarginStart="48dp"
+                    app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
-                    <TextView
-                        android:layout_width="100dp"
-                        android:layout_height="50dp"
-                        android:text="text goes in herrererere"
-                        android:textColor="@color/white" />
+                    <RelativeLayout
+                        android:id="@+id/profileContainer"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginRight="15dp"
+                        android:background="@color/white">
+
+                        <ImageView
+                            android:id="@+id/ivProfilePic"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            app:srcCompat="@drawable/ic_vector_person" />
+
+                        <TextView
+                            android:id="@+id/tvName"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/ivProfilePic"
+                            android:textColor="@android:color/black"
+                            android:textSize="18sp"
+                            android:textStyle="bold"
+                            tools:text="fromis" />
+
+                        <TextView
+                            android:id="@+id/tvUsername"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/tvName"
+                            android:textColor="@color/twitter_dark_gray"
+                            tools:text="fromis321" />
+
+                        <TextView
+                            android:id="@+id/tvBio"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/tvUsername"
+                            android:layout_marginTop="10dp"
+                            android:textColor="@color/twitter_black"
+                            tools:text="just an outlet, to say the things sometimes I just want to say you know, this just documents my " />
+
+                        <RelativeLayout
+                            android:id="@+id/followerContainer"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/tvBio"
+                            android:layout_marginTop="10dp">
+
+                            <TextView
+                                android:id="@+id/followingValue"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/twitter_dark_gray"
+                                android:textStyle="bold"
+                                tools:text="2" />
+
+                            <TextView
+                                android:id="@+id/tvFollowing"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_toRightOf="@id/followingValue"
+                                android:text=" Following  "
+                                android:textColor="@color/twitter_dark_gray" />
+
+                            <TextView
+                                android:id="@+id/followerValue"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_toRightOf="@id/tvFollowing"
+                                android:textColor="@color/twitter_dark_gray"
+                                android:textStyle="bold"
+                                tools:text="47" />
+
+                            <TextView
+                                android:id="@+id/tvFollowers"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_toRightOf="@id/followerValue"
+                                android:text=" Followers"
+                                android:textColor="@color/twitter_dark_gray" />
+                        </RelativeLayout>
+
+                        <Button
+                            android:id="@+id/btnEditProfile"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:backgroundTint="@color/white"
+                            android:text="Edit profile"
+                            android:textColor="@color/twitter_blue" />
 
 
-                </RelativeLayout>
-                <androidx.appcompat.widget.Toolbar
-                    android:id="@+id/testToolbar"
-                    android:layout_width="match_parent"
-                    android:layout_height="?attr/actionBarSize"
-                    android:layout_gravity="bottom"
-                    android:background="@color/twitter_light_gray"
-                    app:layout_anchor="@id/main.appbar"
-                    app:layout_collapseMode="pin"
-                    app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+                    </RelativeLayout>
 
-            </com.google.android.material.appbar.CollapsingToolbarLayout>
+                    <androidx.appcompat.widget.Toolbar
+                        android:id="@+id/profileOptions"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:layout_gravity="bottom"
+                        android:background="@color/white"
 
-        </com.google.android.material.appbar.AppBarLayout>
+                        android:clickable="true"
+                        app:layout_collapseMode="pin"
+                        app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
-        <androidx.core.widget.NestedScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            tools:context=".activities.FollowerActivity">
 
-            <androidx.recyclerview.widget.RecyclerView
+                            <Button
+                                android:id="@+id/btnTweets"
+                                android:layout_width="100dp"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentStart="true"
+                                android:background="@android:color/transparent"
+                                android:backgroundTint="@android:color/transparent"
+                                android:text="Tweets"
+                                android:textColor="@color/twitter_blue" />
+
+                            <View
+                                android:id="@+id/selectTweets"
+                                android:layout_width="100dp"
+                                android:layout_height="1dp"
+                                android:layout_below="@id/btnTweets"
+                                android:background="@color/twitter_blue" />
+
+                            <Button
+                                android:id="@+id/btnTweetsReplies"
+                                android:layout_width="100dp"
+                                android:layout_height="wrap_content"
+                                android:layout_toRightOf="@id/btnTweets"
+                                android:background="@android:color/transparent"
+                                android:backgroundTint="@android:color/transparent"
+                                android:text="Tweets + Replies"
+                                android:textColor="@color/twitter_dark_gray" />
+
+                            <View
+                                android:id="@+id/selectTweetsReplies"
+                                android:layout_width="100dp"
+                                android:layout_height="1dp"
+                                android:layout_below="@id/btnTweetsReplies"
+                                android:layout_toRightOf="@id/btnTweets"
+                                android:background="@color/twitter_blue"
+                                android:visibility="invisible" />
+
+                            <Button
+                                android:id="@+id/btnMedia"
+                                android:layout_width="100dp"
+                                android:layout_height="wrap_content"
+                                android:layout_toRightOf="@id/btnTweetsReplies"
+                                android:background="@android:color/transparent"
+                                android:backgroundTint="@android:color/transparent"
+                                android:text="Media"
+                                android:textColor="@color/twitter_dark_gray" />
+
+                            <View
+                                android:id="@+id/selectMedia"
+                                android:layout_width="100dp"
+                                android:layout_height="1dp"
+                                android:layout_below="@id/btnMedia"
+                                android:layout_toRightOf="@id/btnTweetsReplies"
+                                android:background="@color/twitter_blue"
+                                android:visibility="invisible" />
+
+                            <Button
+                                android:id="@+id/btnLikes"
+                                android:layout_width="100dp"
+                                android:layout_height="wrap_content"
+                                android:layout_toRightOf="@id/btnMedia"
+                                android:background="@android:color/transparent"
+                                android:backgroundTint="@android:color/transparent"
+                                android:text="Likes"
+                                android:textColor="@color/twitter_dark_gray" />
+
+                            <View
+                                android:id="@+id/selectLikes"
+                                android:layout_width="100dp"
+                                android:layout_height="1dp"
+                                android:layout_below="@id/btnLikes"
+                                android:layout_toRightOf="@id/btnMedia"
+                                android:background="@color/twitter_blue"
+                                android:visibility="invisible" />
+
+                        </RelativeLayout>
+                    </androidx.appcompat.widget.Toolbar>
+
+
+                </com.google.android.material.appbar.CollapsingToolbarLayout>
+
+            </com.google.android.material.appbar.AppBarLayout>
+
+            <androidx.core.widget.NestedScrollView
+                android:id="@+id/tweetsContainer"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" >
+                android:layout_height="match_parent"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-            </androidx.recyclerview.widget.RecyclerView>
-        </androidx.core.widget.NestedScrollView>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvTweets"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                </androidx.recyclerview.widget.RecyclerView>
+            </androidx.core.widget.NestedScrollView>
 
 
-    </com.codepath.apps.jotwitter.NestedCoordinatorLayout>
+        </com.codepath.apps.jotwitter.NestedCoordinatorLayout>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="120dp"
-        app:layout_anchor="@id/firstCoordinator"
-        android:src="@drawable/ic_vector_heart_stroke" />
 </LinearLayout>
 
 

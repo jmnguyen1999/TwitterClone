@@ -127,14 +127,14 @@
                 android:background="@color/twitter_light_gray" />
 
             <RelativeLayout
-                android:id="@+id/retweetsAndLikesContainer"
+                android:id="@+id/followerContainer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/firstDivider"
                 android:layout_marginTop="5dp">
 
                 <TextView
-                    android:id="@+id/retweetValue"
+                    android:id="@+id/followingValue"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/twitter_dark_gray"
@@ -142,27 +142,27 @@
                     tools:text="2" />
 
                 <TextView
-                    android:id="@+id/tvRetweet"
+                    android:id="@+id/tvFollowing"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_toRightOf="@id/retweetValue"
+                    android:layout_toRightOf="@id/followingValue"
                     android:text=" Retweets  "
                     android:textColor="@color/twitter_dark_gray" />
 
                 <TextView
-                    android:id="@+id/likesValue"
+                    android:id="@+id/followerValue"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_toRightOf="@id/tvRetweet"
+                    android:layout_toRightOf="@id/tvFollowing"
                     android:textColor="@color/twitter_dark_gray"
                     android:textStyle="bold"
                     tools:text="47" />
 
                 <TextView
-                    android:id="@+id/tvLikes"
+                    android:id="@+id/tvFollowers"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_toRightOf="@id/likesValue"
+                    android:layout_toRightOf="@id/followerValue"
                     android:text=" Likes"
                     android:textColor="@color/twitter_dark_gray" />
             </RelativeLayout>
@@ -171,7 +171,7 @@
                 android:id="@+id/secondDivider"
                 android:layout_width="wrap_content"
                 android:layout_height="0.5dp"
-                android:layout_below="@id/retweetsAndLikesContainer"
+                android:layout_below="@id/followerContainer"
                 android:layout_marginTop="9dp"
                 android:layout_marginBottom="5dp"
                 android:background="@color/twitter_light_gray" />

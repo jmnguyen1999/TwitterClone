@@ -10,7 +10,10 @@ import android.content.Intent;
 import android.graphics.drawable.Icon;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -37,6 +40,7 @@ import org.parceler.Parcels;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CountDownLatch;
 
 import okhttp3.Headers;
 
@@ -354,5 +358,28 @@ public class TimelineActivity extends AppCompatActivity implements ComposeDialog
             }
         };
         return listener;
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item){
+        Intent intent;
+        switch(item.getItemId()){
+            case R.id.action_settings:
+                //Intent to SettingsActivity
+                break;
+            case R.id.action_profile:
+                //Intent to ProfileActivity:
+                Intent toProfile = new Intent(TimelineActivity.this, ProfileActivity.class);
+                startActivity(toProfile);
+                break;
+            default:
+                return false;
+        }
+        return false;
     }
 }
