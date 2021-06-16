@@ -237,7 +237,7 @@ public class TimelineActivity extends AppCompatActivity implements ComposeDialog
     //Purpose:      update the adapter to show this new tweet on the timeline!
     public void composeFinished(Tweet newTweet) {
         Log.d(TAG, "compose dialog for compose was a success!");
-        tweets.add(newTweet);
+        tweets.add(0, newTweet);
         tweetAdapter.notifyItemInserted(0);
         rvTweets.smoothScrollToPosition(0);             //scroll up to see the new tweet
     }
@@ -276,6 +276,7 @@ public class TimelineActivity extends AppCompatActivity implements ComposeDialog
                     client.favoriteThisTweet(tweetClicked.getLongId(), new JsonHttpResponseHandler() {
                         @Override
                         public void onSuccess(int statusCode, Headers headers, JSON json) {
+                            Toast.makeText(TimelineActivity.this, "Successfully liked this tweet!", Toast.LENGTH_SHORT).show();
                             Log.d(TAG, "success in liking the tweet!");
                             heartIcon.setImageDrawable(getDrawable(R.drawable.ic_vector_heart));
                             heartIcon.setSelected(true);
@@ -322,7 +323,7 @@ public class TimelineActivity extends AppCompatActivity implements ComposeDialog
                     client.retweet(tweetClicked.getLongId(), new JsonHttpResponseHandler() {
                         @Override
                         public void onSuccess(int statusCode, Headers headers, JSON json) {
-                            Toast.makeText(TimelineActivity.this, "successfully retweeted!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(TimelineActivity.this, "Sucessfully retweeted!", Toast.LENGTH_SHORT).show();
                         }
 
                         @Override

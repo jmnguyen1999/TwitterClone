@@ -1,0 +1,378 @@
+<!--
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+<include
+layout="@layout/toolbar_main"
+android:layout_width="match_parent"
+android:layout_height="wrap_content"/>  -->
+
+<LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/firstCoordinator"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/background_light"
+        android:fitsSystemWindows="true">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/main.appbar"
+            android:layout_width="match_parent"
+            android:layout_height="140dp"
+            android:fitsSystemWindows="true">
+
+            <com.google.android.material.appbar.CollapsingToolbarLayout
+                android:id="@+id/main.collapsing"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/twitter_blue"
+                android:fitsSystemWindows="true"
+                app:contentScrim="@color/twitter_blue"
+                app:expandedTitleMarginEnd="64dp"
+                app:expandedTitleMarginStart="48dp"
+                app:layout_scrollFlags="scroll|exitUntilCollapsed">
+
+
+                <ImageView
+                    android:id="@+id/main.backdrop"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:fitsSystemWindows="true"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/ic_vector_home_stroke"
+                    app:layout_collapseMode="parallax" />
+
+                <androidx.appcompat.widget.Toolbar
+                    android:id="@+id/main.toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    app:layout_collapseMode="pin"
+                    app:popupTheme="@color/twitter_blue" />
+
+                <!--
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/options"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:layout_gravity="bottom"
+                android:background="@color/twitter_light_gray"
+                app:layout_anchor="@id/main.toolbar"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light" /> -->
+
+                <!-- ADD ANY THING THAT GETS SCROLLED ALL THE WAY UP WITH TOOLBAR -->
+            </com.google.android.material.appbar.CollapsingToolbarLayout>
+
+
+
+            <!--- ADD TAB_LAYOUT HERE-->
+
+        </com.google.android.material.appbar.AppBarLayout>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+        <!--
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">-->
+
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/firstCoordinator"
+        android:background="@android:color/background_light"
+        android:fitsSystemWindows="true">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/testAppbar"
+            android:layout_width="match_parent"
+            android:layout_height="240dp"
+            android:fitsSystemWindows="true">
+
+            <com.google.android.material.appbar.CollapsingToolbarLayout
+                android:id="@+id/testCollapsing"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/twitter_dark_gray"
+                android:fitsSystemWindows="true"
+                app:expandedTitleMarginEnd="64dp"
+                app:expandedTitleMarginStart="48dp"
+                app:layout_scrollFlags="scroll|exitUntilCollapsed">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:background="@color/red">
+
+                    <TextView
+                        android:layout_width="100dp"
+                        android:layout_height="50dp"
+                        android:text="text goes in herrererere"
+                        android:textColor="@color/white" />
+
+
+                </RelativeLayout>
+                <androidx.appcompat.widget.Toolbar
+                    android:id="@+id/testToolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    android:layout_gravity="bottom"
+                    android:background="@color/twitter_light_gray"
+                    app:layout_anchor="@id/main.appbar"
+                    app:layout_collapseMode="pin"
+                    app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+
+            </com.google.android.material.appbar.CollapsingToolbarLayout>
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" >
+
+            </androidx.recyclerview.widget.RecyclerView>
+        </androidx.core.widget.NestedScrollView>
+
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="120dp"
+        app:layout_anchor="@id/firstCoordinator"
+        android:src="@drawable/ic_vector_heart_stroke" />
+</LinearLayout>
+
+<!--
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:ignore="RtlHardcoded">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/main.appbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+        <com.google.android.material.appbar.CollapsingToolbarLayout
+            android:id="@+id/main.collapsing"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:contentScrim="@drawable/ic_launcher_twitter_round"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed">
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                app:layout_collapseMode="parallax" />
+
+            <androidx.appcompat.widget.Toolbar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_collapseMode="pin" />
+
+            <!-
+            <ImageView
+                android:id="@+id/ivBackdrop"
+                android:layout_width="match_parent"
+                android:layout_height="340dp"
+                android:scaleType="centerCrop"
+                app:layout_collapseMode="parallax"
+                app:layout_collapseParallaxMultiplier="0.9" /> -->
+            <!--
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/main.toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="@color/twitter_blue"
+                android:visibility="visible"
+                app:theme="@style/ThemeOverlay.AppCompat.Dark"
+                app:title="">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/main.textview.title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="8dp"
+                        android:gravity="center_vertical"
+                        android:text="The text that stays on screen"
+                        android:textColor="@android:color/white"
+                        android:textSize="20sp" />
+
+                </LinearLayout>
+            </androidx.appcompat.widget.Toolbar> -->
+
+            <!--
+            <FrameLayout
+                android:id="@+id/main.framelayout.title"
+                android:layout_width="match_parent"
+                android:layout_height="220dp"
+                android:layout_gravity="bottom|center_horizontal"
+                android:background="@color/white"
+                android:orientation="vertical"
+                app:layout_collapseMode="parallax"
+                app:layout_collapseParallaxMultiplier="0.3">
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <Space
+                        android:id="@+id/profileSpace"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp" />
+                    <TextView
+                        android:id="@+id/tvName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_below="@id/profileSpace"
+                        android:text="Kim Chaewon"
+                        android:textColor="@color/twitter_black"
+                        android:textSize="30sp"
+                        tools:text="Kim Chaewon" />
+
+                    <TextView
+                        android:id="@+id/tvBio"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tvName"
+                        android:layout_marginTop="4dp"
+                        android:text="I'm really cute"
+                        android:textColor="@color/twitter_black"
+                        tools:text="I'm really cute" />
+
+                </RelativeLayout>
+
+            </FrameLayout>
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/profilePic"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_gravity=""
+                android:layout_marginTop="100dp"
+                android:src="@drawable/vector_compose_shortcut"
+                android:visibility="visible"
+                app:finalHeight = "0dp"
+                app:border_color="@android:color/white"
+                app:border_width="1dp"/>
+
+            <androidx.appcompat.widget.Toolbar
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:layout_gravity="bottom|center_horizontal"
+                android:background="@color/light_gray">
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/tvTweets"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Tweets "
+                        android:textColor="@color/twitter_dark_gray" />
+
+                    <TextView
+                        android:id="@+id/tvTweetsAndReplies"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@id/tvTweets"
+                        android:text="Tweets +  replies  "
+                        android:textColor="@color/twitter_dark_gray" />
+
+                    <TextView
+                        android:id="@+id/tvMedia"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@id/tvTweetsAndReplies"
+                        android:text="Media  "
+                        android:textColor="@color/twitter_dark_gray" />
+
+                    <TextView
+                        android:id="@+id/tvLikes"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@id/tvMedia"
+                        android:text="Likes"
+                        android:textColor="@color/twitter_dark_gray" />
+                </RelativeLayout>
+
+            </androidx.appcompat.widget.Toolbar>
+            -->
+
+<!--
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
+    </com.google.android.material.appbar.AppBarLayout>
+
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none"
+        app:behavior_overlapTop="0dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            app:cardElevation="0dp"
+            app:contentPadding="16dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:lineSpacingExtra="8dp"
+                android:text="I think this is the content and it's reliant on me being really long."
+                android:textSize="18sp"
+                tools:text="I think this is the content and it's reliant on me being really long." />
+        </androidx.cardview.widget.CardView>
+    </androidx.core.widget.NestedScrollView>
+
+    <!-
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/profilePic"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_gravity=""
+        android:src="@drawable/ic_vector_person"
+        android:visibility="visible"
+        app:border_color="@android:color/white"
+        app:border_width="2dp"
+        app:finalHeight="@dimen/image_final_width"
+        app:finalYPosition="2dp"
+        app:layout_behavior="com.codepath.apps.jotwitter.AvatarImageBehavior"
+        app:startHeight="2dp"
+        app:startToolbarPosition="2dp"
+        app:startXPosition="2dp" />  -->
+<!--
+</androidx.coordinatorlayout.widget.CoordinatorLayout> -->

@@ -27,6 +27,8 @@
         <item name="android:windowTranslucentStatus">true</item>
         <item name="android:windowTranslucentNavigation">true</item>
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+
+
     </style>
 
     <style name="validCount">
@@ -40,4 +42,9 @@
     <style name="ToolbarTheme" parent="Theme.AppCompat.Light.DarkActionBar">
 
     </style>
+
+    <!-- dimensions -->
+    <dimen name="image_width">120dp</dimen>
+    <dimen name="image_final_width">32dp</dimen>
+    <dimen name="spacing_normal">16dp</dimen>
 </resources>

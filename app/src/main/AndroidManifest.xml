@@ -10,16 +10,26 @@
     <application
         android:name=".TwitterApp"
         android:allowBackup="true"
-        android:icon="@drawable/ic_launcher_twitter"
+        android:icon="@drawable/ic_launcher_twitter_round"
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
-        <activity android:name=".activities.FollowerActivity"></activity>
+        <activity android:name=".activities.ProfileActivity">
+            <!-- To test the ProfileActiviy's layout:
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            -->
+        </activity>
+        <activity android:name=".activities.FollowerActivity" />
         <activity android:name=".activities.TweetDetailActivity" />
         <activity android:name=".activities.TimelineActivity" />
         <activity
             android:name=".activities.LoginActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -35,6 +45,7 @@
                     android:host="@string/intent_host"
                     android:scheme="@string/intent_scheme" />
             </intent-filter>
+
         </activity>
     </application>
 
