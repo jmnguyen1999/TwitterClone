@@ -152,18 +152,49 @@ public class TweetDetailActivity extends AppCompatActivity implements ComposeDia
 
     //Purpose:      Get all the replies to the given tweet id.
     public void getAllReplies(String username, String tweetId){
-        client.getRepliesToUser(username, new JsonHttpResponseHandler() {
+        /*client.getHomeTimeline(new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Headers headers, JSON json) {
+                JSONArray jsonResponse = json.jsonArray;
+
+                try {
+                    for (int i = 0; i < jsonResponse.length(); i++) {
+                        JSONObject jsonTweet = jsonResponse.getJSONObject(i);
+                        if(tweetId.equals(jsonTweet.getString("in_reply_to_status_id_str"))) {
+                            replies.add(Tweet.fromJson(jsonTweet));
+                        }
+                    }
+                    Log.d(TAG, "replies = " + replies.toString());
+                    replyAdapter.notifyDataSetChanged();
+
+                } catch(JSONException e){
+
+                }
+
+            }
+
+            @Override
+            public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
+
+            }
+        });*/
+
+
+
+        client.getRepliesToUser(username, tweetId, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Headers headers, JSON json) {
                 Log.d(TAG, "successful getting replies");
                 JSONObject jsonResponse = json.jsonObject;
+                Log.d(TAG, "jsonResponse = " + jsonResponse.toString());
                 try {
                     JSONArray jsonStatuses = jsonResponse.getJSONArray("statuses");
+                    Log.d(TAG, "json status array = " + jsonStatuses.toString());
 
                     //Only save those whose "in_reply_to_status_id_str" key is the same as the given tweetId
                     //  (all the tweets in reply to this specific tweet)
                     List<JSONObject> jsonReplies = new ArrayList<>();
-                    Log.d(TAG, Tweet.fromJsonArray(jsonStatuses).toString());
+                    Log.d(TAG, "Tweets received = " + Tweet.fromJsonArray(jsonStatuses).toString());
                     for(int i = 0; i < jsonStatuses.length(); i++){
                         JSONObject jsonTweet = jsonStatuses.getJSONObject(i);
                         String otherTweetId = jsonTweet.getString("in_reply_to_status_id_str");

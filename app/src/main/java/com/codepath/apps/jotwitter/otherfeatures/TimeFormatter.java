@@ -18,7 +18,6 @@ import java.util.TimeZone;
  * This, as of 2016-06-29, matches the behavior of the official Twitter app.
  */
 public class TimeFormatter {
-    private static String twitterFormat = "EEE MMM dd HH:mm:ss ZZZZZ yyyy";
 
     public static String getTimeDifference(String rawJsonDate) {
         String time = "";
@@ -58,6 +57,7 @@ public class TimeFormatter {
 
     //For format = "month/date/year"
     public static String getAbbreviatedDate(String rawDateString){
+        String twitterFormat = "EEE MMM dd HH:mm:ss ZZZZZ yyyy";
         DateFormat originalFormat = new SimpleDateFormat(twitterFormat, Locale.ENGLISH);
         DateFormat targetFormat = new SimpleDateFormat("MM/dd/yyyy");       //07-11-2020
         Date date = null;
@@ -73,6 +73,7 @@ public class TimeFormatter {
 
     //For format = "month date, year"
     public static String getProperDate(String rawDateString){
+        String twitterFormat = "EEE MMM dd HH:mm:ss ZZZZZ yyyy";
         DateFormat originalFormat = new SimpleDateFormat(twitterFormat, Locale.ENGLISH);
         DateFormat targetFormat = new SimpleDateFormat("MMMM dd, yyyy");       //07-11-2020
         Date date = null;
@@ -91,6 +92,7 @@ public class TimeFormatter {
      * This, as of 2016-06-30, matches the behavior of the official Twitter app.
      */
     public static String getTimeStamp(String rawJsonDate) {
+        String twitterFormat = "EEE MMM dd HH:mm:ss ZZZZZ yyyy";
         String time = "";
         SimpleDateFormat format = new SimpleDateFormat(twitterFormat, Locale.ENGLISH);
         format.setLenient(true);
@@ -113,7 +115,6 @@ public class TimeFormatter {
     private static final int HOUR_MILLIS = 60 * MINUTE_MILLIS;
     private static final int DAY_MILLIS = 24 * HOUR_MILLIS;
 
-    /*
     public static String getRelativeTimeAgo(String rawJsonDate) {
         String twitterFormat = "EEE MMM dd HH:mm:ss ZZZZZ yyyy";
         SimpleDateFormat sf = new SimpleDateFormat(twitterFormat, Locale.ENGLISH);
@@ -145,7 +146,10 @@ public class TimeFormatter {
         }
 
         return "";
-    }*/
+    }
+
+
+    /*
     public static String getRelativeTimeAgo(String rawJsonDate) {
         String twitterFormat = "EEE MMM dd HH:mm:ss ZZZZZ yyyy";
         SimpleDateFormat sf = new SimpleDateFormat(twitterFormat, Locale.ENGLISH);
@@ -161,5 +165,5 @@ public class TimeFormatter {
         }
 
         return relativeDate;
-    }
+    }*/
 }

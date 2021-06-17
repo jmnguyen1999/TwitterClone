@@ -144,8 +144,7 @@ public class ProfileActivity extends AppCompatActivity{ /*implements AppBarLayou
                     tvBio.setText(jsonResponse.getString("description"));
                     Log.d(TAG, "bio = " + jsonResponse.getString("description"));
                     setUserId(jsonResponse.getString("id_str"));
-                    getUserTweets();
-                } catch (JSONException e) {
+                    getUserTweets();                } catch (JSONException e) {
                     e.printStackTrace();
                 }
             }

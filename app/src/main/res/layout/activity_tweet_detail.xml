@@ -263,8 +263,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
-                    android:progressTint="@color/twitter_blue"
-                    android:visibility="invisible" />
+                    android:progressTint="@color/twitter_blue" />
             </RelativeLayout>
         </RelativeLayout>
     </ScrollView>
