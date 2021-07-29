@@ -6,18 +6,24 @@
     android:id="@+id/toolbar"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    style="@style/Base_ToolbarStyle">
+
+
+
+</androidx.appcompat.widget.Toolbar>
+
+<!--
     android:background="?attr/colorPrimary"
     android:backgroundTint="@color/twitter_blue"
-    android:minHeight="?attr/actionBarSize"
     app:contentInsetLeft="5dp"
     app:contentInsetStart="5dp"
-    app:titleTextColor="@android:color/white">
+    app:titleTextColor="@android:color/white"
+        android:minHeight="?attr/actionBarSize"
 
-    <ImageView
+      <ImageView
         android:layout_width="35dp"
         android:layout_height="35dp"
         android:layout_gravity="center"
         android:layout_marginStart="15dp"
         android:src="@drawable/twitter_logo" />
-
-</androidx.appcompat.widget.Toolbar>
+-->

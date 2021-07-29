@@ -293,6 +293,7 @@ public class TimelineActivity extends AppCompatActivity implements ComposeDialog
                         }
                     });
                 }
+
                 else{
                     Log.d(TAG, "heartIcon is selected = true");
                     client.unfavoriteThisTweet(tweetClicked.getLongId(), new JsonHttpResponseHandler() {
@@ -378,6 +379,10 @@ public class TimelineActivity extends AppCompatActivity implements ComposeDialog
                 Intent toProfile = new Intent(TimelineActivity.this, ProfileActivity.class);
                 startActivity(toProfile);
                 break;
+            case R.id.action_logout:
+                //log out:
+                client.clearAccessToken();
+                finish();
             default:
                 return false;
         }
