@@ -1,6 +1,6 @@
-# Project 3 - *FBU-Twitter*
+# Project 3 - *TwitterClone*
 
-**FBU-Twitter** is an android app that allows a user to view their Twitter timeline and post a new tweet. The app utilizes [Twitter REST API](https://dev.twitter.com/rest/public).
+**TwitterClone** is an Android app that provides various CRUD operations on a Twitter account given an authenticated Twitter user. Specifications are listed below. The app utilizes [Twitter REST API](https://dev.twitter.com/rest/public).
 
 Time spent: **25.5** hours spent in total
 
@@ -49,7 +49,7 @@ Here's a walkthrough of implemented user stories:
 <br>GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
 ## Notes
-
+N/A
 
 ## Open-source libraries used
 
