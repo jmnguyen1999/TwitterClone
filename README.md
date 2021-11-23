@@ -1,4 +1,4 @@
-# Project 3 - *TwitterClone*
+# *TwitterClone*
 
 **TwitterClone** is an Android app that provides various CRUD operations on a Twitter account given an authenticated Twitter user. Specifications are listed below. The app utilizes [Twitter REST API](https://dev.twitter.com/rest/public).
 
